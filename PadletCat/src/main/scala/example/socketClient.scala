@@ -36,7 +36,7 @@ class Socket(remote: InetSocketAddress, simul: ActorRef /*,bdActor*/ ) extends A
       IO(Tcp) ! Bind(self, remote)
 
       var handler: Option[ActorRef] = None
-      simul ! "Alice"
+      simul ! "A"
       context.become { // ce comportement, gère les connections.
         case Bound(local) =>
           println(s"Server started on $local")
@@ -53,7 +53,7 @@ class Socket(remote: InetSocketAddress, simul: ActorRef /*,bdActor*/ ) extends A
 
     case c @ Connected(remote, local) => // si il arrive à se connecter à un serveur, il devient client.
       println("connected")
-      simul ! "Robert"
+      simul ! "B"
 
       val connection = sender()
       connection ! Register(self)
