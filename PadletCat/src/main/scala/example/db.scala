@@ -8,9 +8,8 @@ import scala.collection.mutable.ListBuffer
 class BachTStore(clientName: String) extends Actor {
 
   // chaque utilisateur a une DB.
-  var dbname = "bacht"
 
-  val url                    = s"jdbc:mysql://127.0.0.1:3306/$dbname?allowMultiQueries=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+  val url                    = s"jdbc:sqlite:bacht.db"
   val driver                 = "com.mysql.jdbc.Driver"
   val username               = "root"
   val password               = ""

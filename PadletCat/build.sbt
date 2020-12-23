@@ -17,7 +17,8 @@ lazy val root = (project in file("."))
     libraryDependencies += "com.typesafe.akka"            %% "akka-actor" % "2.4.0",
     libraryDependencies += "com.typesafe.akka"            %% "akka-http-core-experimental" % "2.0.2",
     libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.10.1",
-    libraryDependencies += "mysql"                        % "mysql-connector-java" % "8.0.13"
+    libraryDependencies += "mysql"                        % "mysql-connector-java" % "8.0.13",
+    libraryDependencies += "org.xerial"                        % "sqlite-jdbc" % "3.34.0"
   )
 
 // See https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html for instructions on how to publish to Sonatype.
