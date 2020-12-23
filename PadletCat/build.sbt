@@ -1,18 +1,23 @@
-name := "PadletCat"
+import Dependencies._
 
-version := "0.1"
+ThisBuild / scalaVersion := "2.11.7"
+ThisBuild / version := "0.1"
+ThisBuild / organization := "be.master2"
+ThisBuild / organizationName := "groupe4"
 
-scalaVersion := "2.11.7"
+scalacOptions := Seq("-unchecked", "-deprecation")
 
-// https://mvnrepository.com/artifact/com.typesafe.akka/akka-http
-val akkaHttpVersion = "1.0-RC4"
-libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-http-core-experimental" % akkaHttpVersion,
-  "org.scalafx" %% "scalafx" % "8.0.144-R12",
-  "org.java-websocket" % "Java-WebSocket" % "1.3.0",
-  "org.scala-lang.modules" %% "scala-swing" % "2.1.1",
-  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
-  "mysql" % "mysql-connector-java" % "5.1.24",
-  "com.typesafe.akka" %% "akka-actor" % "2.4.0",
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.10.1"
-)
+lazy val root = (project in file("."))
+  .settings(
+    name := "bachT",
+    libraryDependencies += scalaTest                      % Test,
+    libraryDependencies += "org.scala-lang.modules"       %% "scala-parser-combinators" % "1.0.2",
+    libraryDependencies += "org.scala-lang.modules"       % "scala-swing_2.11" % "1.0.1",
+    libraryDependencies += "org.scalafx"                  %% "scalafx" % "8.0.144-R12",
+    libraryDependencies += "com.typesafe.akka"            %% "akka-actor" % "2.4.0",
+    libraryDependencies += "com.typesafe.akka"            %% "akka-http-core-experimental" % "2.0.2",
+    libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.10.1",
+    libraryDependencies += "mysql"                        % "mysql-connector-java" % "8.0.13"
+  )
+
+// See https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html for instructions on how to publish to Sonatype.
