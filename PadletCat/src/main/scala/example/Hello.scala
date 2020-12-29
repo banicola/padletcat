@@ -71,15 +71,17 @@ object Main extends JFXApp {
     style = "-fx-background-color:transparent"
   }
 
-  case class Filter(val name: String)
+  case class Filter(val name: String, val location: String, val tag: String)
 
   var datas             = ListBuffer[(String, Data)]()
   var filterButtonsList = List[ToggleButton]()
   var filters: ListBuffer[Filter] = ListBuffer(
-    Filter("Yuzu"),
-    Filter("Moka"),
-    Filter("Clipsy")
+    Filter("Yuzu", "Canada", "Visites"),
+    Filter("Moka", "Belgique", "Soirées"),
+    Filter("Clipsy", "Singapour", "Mémoire")
   )
+  var locationsName: List[String] = List("Canada", "Singapour", "Belgique")
+  var tagsName: List[String]      = List("Soirées", "Mémoire", "Visites")
   val toggleGroup: ToggleGroup    = new ToggleGroup();
 
   dbActor ! Load
@@ -277,6 +279,15 @@ object Main extends JFXApp {
 
       val vboxTitre = new VBox
       vboxTitre.children = List(labelTitre, addFilterName)
+
+      val localisation = new ComboBox(locationsName) {
+        minWidth = 185
+        maxWidth = 185
+      }
+
+      val labelLocalisation = new Label("Localisation")
+      val vboxLocalisation  = new VBox
+      vboxLocalisation.children = List(labelLocalisation, localisation)
 
       val tag = new ComboBox(tagsName) {
         minWidth = 185
@@ -549,6 +560,14 @@ object Main extends JFXApp {
         val vboxTitre  = new VBox
         vboxTitre.children = List(labelTitre, titre)
 
+        val localisation = new ComboBox(locationsName) {
+          minWidth = 200
+          maxWidth = 200
+        }
+        val labelLocalisation = new Label("Localisation")
+        val vboxLocalisation  = new VBox
+        vboxLocalisation.children = List(labelLocalisation, localisation)
+
         val tag = new ComboBox(tagsName) {
           minWidth = 200
           maxWidth = 200
@@ -710,7 +729,7 @@ object Main extends JFXApp {
           x.name == toggleGroup.getSelectedToggle.getUserData().toString()
         }.head
       datas.toList.filter { x =>
-        x._2.tags.contains(filter.tag)
+        x._2.location == filter.location && x._2.tags.contains(filter.tag)
       }
     } else {
       datas.toList
@@ -836,6 +855,7 @@ class DBActor(simul: ActorRef) extends Actor {
       video: String,
       title: String,
       text: String,
+      location: String,
       tags: List[String]
   ) = {
     val content: Data = Data(
@@ -845,6 +865,7 @@ class DBActor(simul: ActorRef) extends Actor {
       video,
       title,
       text,
+      location,
       tags
     )
     val x = Random.nextInt(Integer.MAX_VALUE)
@@ -860,9 +881,10 @@ class DBActor(simul: ActorRef) extends Actor {
         video: String,
         title: String,
         text: String,
+        location: String,
         tags: List[String]
         ) =>
-      addContent(owner, date, image, video, title, text, tags)
+      addContent(owner, date, image, video, title, text, location, tags)
     case Remove(id: String) => simul ! Command(s"get($id)", Map())
     case Load               => simul ! Command("get(All)", Map())
     case x: Data            =>
@@ -891,6 +913,7 @@ case class Add(
     video: String,
     title: String,
     text: String,
+    location: String,
     tags: List[String]
 ) extends Message
 case class Remove(id: String)                    extends Message

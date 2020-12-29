@@ -12,7 +12,7 @@ package example
 
 class Expr
 case class bacht_ast_empty_agent()                                  extends Expr
-case class bacht_ast_primitive(primitive: String, token: String, title: String, content: String)    extends Expr
+case class bacht_ast_primitive(primitive: String, token: String)    extends Expr
 case class bacht_ast_agent(op: String, agenti: Expr, agentii: Expr) extends Expr
 import scala.util.parsing.combinator._
 import scala.util.matching.Regex
@@ -28,9 +28,6 @@ import scala.concurrent.Await
 class BachTParsers extends RegexParsers {
 
   def token: Parser[String] = ("[0-9a-zA-Z_]+").r ^^ { _.toString }
-  def title : Parser[String] = ("^.+?(?=\\,)").r ^^ {_.toString}
-  def content : Parser[String] = ("^.+?(?=\\))").r ^^ {_.toString}
-  def separator : Parser[String] = (",").r ^^ {_.toString}
 
   val opChoice: Parser[String] = "+"
   val opPara: Parser[String]   = "||"
@@ -38,20 +35,17 @@ class BachTParsers extends RegexParsers {
 
   def primitive: Parser[Expr] =
     "tell(" ~ token ~ ")" ^^ {
-      case _ ~ vtoken ~ _ => bacht_ast_primitive("tell", vtoken, "", "")
+      case _ ~ vtoken ~ _ => bacht_ast_primitive("tell", vtoken)
     } |
-    "tell(" ~ token ~ separator ~ title ~ separator ~ content ~ ")" ^^ {
-      case _ ~ vtoken ~ vseparator ~ vtitle ~ vseparator2 ~ vcontent ~ _ => bacht_ast_primitive("tell", vtoken, vtitle, vcontent)
-    } |
-    "ask(" ~ token ~ ")" ^^ {
-      case _ ~ vtoken ~ _ => bacht_ast_primitive("ask", vtoken)
-    } |
-    "get(" ~ token ~ ")" ^^ {
-      case _ ~ vtoken ~ vauthor ~ _ => bacht_ast_primitive("get", vtoken)
-    } |
-    "nask(" ~ token ~ ")" ^^ {
-      case _ ~ vtoken ~ vauthor ~ _ => bacht_ast_primitive("nask", vtoken)
-    }
+      "ask(" ~ token ~ ")" ^^ {
+        case _ ~ vtoken ~ _ => bacht_ast_primitive("ask", vtoken)
+      } |
+      "get(" ~ token ~ ")" ^^ {
+        case _ ~ vtoken ~ _ => bacht_ast_primitive("get", vtoken)
+      } |
+      "nask(" ~ token ~ ")" ^^ {
+        case _ ~ vtoken ~ _ => bacht_ast_primitive("nask", vtoken)
+      }
 
   def agent = compositionChoice
 
@@ -94,7 +88,13 @@ object BachTSimulParser extends BachTParsers {
 }
 import scala.swing._
 
-case class MessageSend(instr: String, token: String)
+class BachTInstr
+case class Tell(token: String, data: Map[String, Data]) extends BachTInstr
+case class Ask(token: String, data: Map[String, Data])  extends BachTInstr
+case class Get(token: String, data: Map[String, Data])  extends BachTInstr
+case class Nask(token: String, data: Map[String, Data]) extends BachTInstr
+
+case class MessageSend(instr: String, token: String, data: Map[String, Data])
 
 import scala.util.Random
 import language.postfixOps
@@ -103,7 +103,8 @@ import language.postfixOps
   * Cette classe est un acteur qui exécute le code écrit en BachT.
   *
   */
-class BachTSimul(var bb: BachTStore) {
+class BachTSimul() extends Actor {
+  private implicit val timeout = Timeout(10, SECONDS)
 
   // creating the socket actor in order to communicate with the other app.
   val socket = context.actorOf(
@@ -142,11 +143,11 @@ class BachTSimul(var bb: BachTStore) {
   val bacht_random_choice = new Random()
 
   // code du prof. J'ai uniquement rajouté "data" afin de faciliter l'utilisation de bachT.
-  def run_one(agent: Expr): (Boolean, Expr) = {
+  def run_one(agent: Expr, data: Map[String, Data]): (Boolean, Expr) = {
 
     agent match {
-      case bacht_ast_primitive(prim, token, title, content) => {
-        if (exec_primitive(prim, token, title, content)) {
+      case bacht_ast_primitive(prim, token) => {
+        if (exec_primitive(prim, token, data)) {
           (true, bacht_ast_empty_agent())
         } else {
           (false, agent)
@@ -164,9 +165,9 @@ class BachTSimul(var bb: BachTStore) {
       case bacht_ast_agent("||", ag_i, ag_ii) => {
         var branch_choice = bacht_random_choice.nextInt(2)
         if (branch_choice == 0) {
-          run_one(ag_i) match {
+          run_one(ag_i, data) match {
             case (false, _) => {
-              run_one(ag_ii) match {
+              run_one(ag_ii, data) match {
                 case (false, _)                      => (false, agent)
                 case (true, bacht_ast_empty_agent()) => (true, ag_i)
                 case (true, ag_cont) =>
@@ -178,9 +179,9 @@ class BachTSimul(var bb: BachTStore) {
               (true, bacht_ast_agent("||", ag_cont, ag_ii))
           }
         } else {
-          run_one(ag_ii) match {
+          run_one(ag_ii, data) match {
             case (false, _) => {
-              run_one(ag_i) match {
+              run_one(ag_i, data) match {
                 case (false, _)                      => (false, agent)
                 case (true, bacht_ast_empty_agent()) => (true, ag_ii)
                 case (true, ag_cont) =>
@@ -197,9 +198,9 @@ class BachTSimul(var bb: BachTStore) {
       case bacht_ast_agent("+", ag_i, ag_ii) => {
         var branch_choice = bacht_random_choice.nextInt(2)
         if (branch_choice == 0) {
-          run_one(ag_i) match {
+          run_one(ag_i, data) match {
             case (false, _) => {
-              run_one(ag_ii) match {
+              run_one(ag_ii, data) match {
                 case (false, _) => (false, agent)
                 case (true, bacht_ast_empty_agent()) =>
                   (true, bacht_ast_empty_agent())
@@ -211,9 +212,9 @@ class BachTSimul(var bb: BachTStore) {
             case (true, ag_cont) => (true, ag_cont)
           }
         } else {
-          run_one(ag_ii) match {
+          run_one(ag_ii, data) match {
             case (false, _) => {
-              run_one(ag_i) match {
+              run_one(ag_i, data) match {
                 case (false, _) => (false, agent)
                 case (true, bacht_ast_empty_agent()) =>
                   (true, bacht_ast_empty_agent())
@@ -230,11 +231,12 @@ class BachTSimul(var bb: BachTStore) {
   }
 
   // code du prof. J'ai uniquement rajouté "data" afin de faciliter l'utilisation de bachT.
-  def bacht_exec_all(agent: Expr): Boolean = {
+  def bacht_exec_all(agent: Expr, data: Map[String, Data]): Boolean = {
+
     var failure = false
     var c_agent = agent
     while (c_agent != bacht_ast_empty_agent() && !failure) {
-      failure = run_one(c_agent) match {
+      failure = run_one(c_agent, data) match {
         case (false, _) => true
         case (true, new_agent) => {
           c_agent = new_agent
@@ -252,13 +254,32 @@ class BachTSimul(var bb: BachTStore) {
     }
   }
 
-  def exec_primitive(prim: String, token: String , title: String, content: String): Boolean = {
-    prim match {
-      case "tell" if (title != "" && content != "")=> bb.tell(token, title, content)
-      case "tell" => bb.tell(token)
-      case "ask" => bb.ask(token)
-      case "get" => bb.get(token)
-      case "nask" => bb.nask(token)
+  // J'ai  rajouté "data" afin de faciliter l'utilisation de bachT.
+  // De plus, au lieu d'appeler directement le store, on lui envois un message avec "?" et attendons la reponse (Boolean
+  // De plus, pour tell et get, on envois l'instruction à l'auttre app afin qu'elles aient les mêmes données.
+  def exec_primitive(
+      prim: String,
+      token: String,
+      data: Map[String, Data]
+  ): Boolean = {
+    val response = prim match {
+      case "tell" =>
+        println("envois au socket")
+        socket ! SendMessage(Tell(token, data))
+        store ? Tell(token, data)
+      case "ask" => store ? Ask(token, data)
+      case "get" =>
+        if (token != "All") {
+          socket ! SendMessage(Get(token, data))
+        }
+        store ? Get(token, data)
+      case "nask" => store ? Nask(token, data)
     }
+
+    Await.result(response, timeout.duration).asInstanceOf[Boolean]
+
   }
+
 }
+
+case class Command(var command: String, var data: Map[String, Data])
