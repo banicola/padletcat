@@ -60,14 +60,6 @@ class Socket(remote: InetSocketAddress, simul: ActorRef /*,bdActor*/ ) extends A
       context.become {
         case SendMessage(message) =>
           println("Sending message: " + message)
-          /*println(
-            "supposed to receive: " + deballageDuCadeau(
-              JacksonWrapper
-                .deserialize[ChristmasGift](
-                  ByteString(JacksonWrapper.serialize(messageSending(message))).utf8String
-                )
-            )
-          )*/
           connection ! Write(ByteString(JacksonWrapper.serialize(messageSending(message))))
         //case data: ByteString =>
         //connection ! Write(data)
@@ -97,14 +89,6 @@ class Socket(remote: InetSocketAddress, simul: ActorRef /*,bdActor*/ ) extends A
         context stop self
       case SendMessage(message) =>
         println("Sending message: " + message)
-        /*println(
-          "supposed to receive: " + messageReception(
-            JacksonWrapper
-              .deserialize[MessageSend](
-                ByteString(JacksonWrapper.serialize(messageSending(message))).utf8String
-              )
-          )
-        )*/
         sender ! Write(ByteString(JacksonWrapper.serialize(messageSending(message))))
     }
   }
