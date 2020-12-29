@@ -76,9 +76,9 @@ object Main extends JFXApp {
   var datas             = ListBuffer[(String, Data)]()
   var filterButtonsList = List[ToggleButton]()
   var filters: ListBuffer[Filter] = ListBuffer(
-    Filter("Visites - Canada", "Canada", "Visites"),
-    Filter("UNamur weekend", "Belgique", "Soirées"),
-    Filter("Mémoire à Singapour", "Singapour", "Mémoire")
+    Filter("Yuzu", "Canada", "Visites"),
+    Filter("Moka", "Belgique", "Soirées"),
+    Filter("Clipsy", "Singapour", "Mémoire")
   )
   var locationsName: List[String] = List("Canada", "Singapour", "Belgique")
   var tagsName: List[String]      = List("Soirées", "Mémoire", "Visites")
