@@ -71,15 +71,16 @@ object Main extends JFXApp {
     style = "-fx-background-color:transparent"
   }
 
-  case class Filter(val name: String)
+  case class Filter(val name: String, val tag: String)
 
   var datas             = ListBuffer[(String, Data)]()
   var filterButtonsList = List[ToggleButton]()
   var filters: ListBuffer[Filter] = ListBuffer(
-    Filter("Yuzu"),
-    Filter("Moka"),
-    Filter("Clipsy")
+    Filter("Yuzu", "Visites"),
+    Filter("Moka", "Soirées"),
+    Filter("Clipsy", "Mémoire")
   )
+  var tagsName: List[String]      = List("Soirées", "Mémoire", "Visites")
   val toggleGroup: ToggleGroup    = new ToggleGroup();
 
   dbActor ! Load
@@ -278,10 +279,18 @@ object Main extends JFXApp {
       val vboxTitre = new VBox
       vboxTitre.children = List(labelTitre, addFilterName)
 
+      val tag = new ComboBox(tagsName) {
+        minWidth = 185
+        maxWidth = 185
+      }
+      val labelTag = new Label("Tags")
+      val vboxTag  = new VBox
+      vboxTag.children = List(labelTag, tag)
+
       val contentAddFilterPane = new HBox(20)
       contentAddFilterPane.setStyle("-fx-background-color: rgb(255,255,255);")
       contentAddFilterPane.setPadding(new Insets(0, 30, 0, 30))
-      contentAddFilterPane.children = List(vboxTitre)
+      contentAddFilterPane.children = List(vboxTitre, vboxTag)
 
       val greyLineFilter = new Line {
         stroke = rgb(150, 150, 150)
@@ -360,9 +369,10 @@ object Main extends JFXApp {
       createButton.onMouseClicked = new EventHandler[MouseEvent] {
         override def handle(event: MouseEvent) {
           println("create add filter")
-          if (addFilterName.text.value != "" ) {
+          if (addFilterName.text.value != "" && tag.value.value != null) {
             filters += Filter(
-              addFilterName.text.value
+              addFilterName.text.value,
+              tag.value.value
             )
             filterButtonsList = createFiltersButton()
             filterButtonsList.map(_.setToggleGroup(toggleGroup))
@@ -498,15 +508,7 @@ object Main extends JFXApp {
             mainStack.children.remove(ajoutContenu)
           }
         }
-
-        val addLocalisation     = new Image("add.jpg")
-        val addLocalisationView = new ImageView(addLocalisation)
-        addLocalisationView.onMouseClicked = new EventHandler[MouseEvent] {
-          override def handle(event: MouseEvent) {
-            println("add localisation")
-          }
-        }
-
+        
         val addFilter     = new Image("add.jpg")
         val addFilterView = new ImageView(addFilter)
         addFilterView.onMouseClicked = new EventHandler[MouseEvent] {
@@ -539,8 +541,16 @@ object Main extends JFXApp {
         val vboxTitre  = new VBox
         vboxTitre.children = List(labelTitre, titre)
 
+        val tag = new ComboBox(tagsName) {
+          minWidth = 200
+          maxWidth = 200
+        }
+        val labelTag = new Label("Tags")
+        val vboxTag  = new VBox
+        vboxTag.children = List(labelTag, tag)
+
         values.children =
-          List(vboxTitre, addLocalisationView, addFilterView)
+          List(vboxTitre, vboxTag)
 
         val description = new TextArea {
           wrapText = true
@@ -599,7 +609,7 @@ object Main extends JFXApp {
             val date                 = dateFormatter.format(submittedDateConvert)
             var encodedfile: String  = ""
 
-            if (titre.text.value != "" && description.text.value != "") {
+            if (titre.text.value != "" && description.text.value != "" && tag.value.value != null) {
               if (selectedImage != null) {
                 //transform file to string
 
@@ -614,7 +624,8 @@ object Main extends JFXApp {
                 encodedfile,
                 video.text.value,
                 titre.text.value,
-                description.text.value
+                description.text.value,
+                List(tag.value.value)
               )
 
               mainStack.children.remove(ajoutContenu)
@@ -689,7 +700,9 @@ object Main extends JFXApp {
         filters.filter { x =>
           x.name == toggleGroup.getSelectedToggle.getUserData().toString()
         }.head
-        datas.toList
+      datas.toList.filter { x =>
+        x._2.tags.contains(filter.tag)
+      }
     } else {
       datas.toList
     }
@@ -813,7 +826,8 @@ class DBActor(simul: ActorRef) extends Actor {
       image: String,
       video: String,
       title: String,
-      text: String
+      text: String,
+      tags: List[String]
   ) = {
     val content: Data = Data(
       owner,
@@ -821,7 +835,8 @@ class DBActor(simul: ActorRef) extends Actor {
       image,
       video,
       title,
-      text
+      text,
+      tags
     )
     val x = Random.nextInt(Integer.MAX_VALUE)
     println(x.toString)
@@ -835,9 +850,10 @@ class DBActor(simul: ActorRef) extends Actor {
         image: String,
         video: String,
         title: String,
-        text: String
+        text: String,
+        tags: List[String]
         ) =>
-      addContent(owner, date, image, video, title, text)
+      addContent(owner, date, image, video, title, text, tags)
     case Remove(id: String) => simul ! Command(s"get($id)", Map())
     case Load               => simul ! Command("get(All)", Map())
     case x: Data            =>
@@ -865,7 +881,8 @@ case class Add(
     image: String,
     video: String,
     title: String,
-    text: String
+    text: String,
+    tags: List[String]
 ) extends Message
 case class Remove(id: String)                    extends Message
 case class AddToGui(id: String, data: Data)      extends Message

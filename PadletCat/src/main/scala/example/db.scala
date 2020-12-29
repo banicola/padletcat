@@ -135,7 +135,7 @@ class BachTStore(clientName: String) extends Actor {
           val image    = rs.getString("image")
           val video    = rs.getString("video")
 
-          gui ! AddToGui(id, Data(owner, date, image, video, title, description))
+          gui ! AddToGui(id, Data(owner, date, image, video, title, description, null))
         }
       } else {
         var statement = connection.prepareStatement(
@@ -159,7 +159,7 @@ class BachTStore(clientName: String) extends Actor {
         val image    = rs.getString("image")
         val video    = rs.getString("video")
 
-        gui ! RemoveFromGui(id, Data(owner, date, image, video, title, description))
+        gui ! RemoveFromGui(id, Data(owner, date, image, video, title, description, null))
         statement = connection.prepareStatement("DELETE FROM content WHERE id=?")
         statement.setString(1, token)
         statement.executeUpdate()
@@ -184,5 +184,6 @@ case class Data(
     var image: String,
     var video: String,
     var title: String,
-    var description: String
+    var description: String,
+    var tags: List[String]
 )
