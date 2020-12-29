@@ -1,4 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:415:33: Reference to uninitialized value filtersHBox[0m
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\User\Desktop\Projet jacquet\padletcat\PadletCat\src\main\scala\example\Hello.scala:415:33: Reference to uninitialized value filtersHBox[0m
 [0m[[0m[33mwarn[0m] [0m[0m      filtersEditionPane.left = filtersHBox[0m
 [0m[[0m[33mwarn[0m] [0m[0m                                ^[0m
 [0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

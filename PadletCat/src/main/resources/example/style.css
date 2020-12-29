@@ -1,14 +1,14 @@
 .toggle-button {
     -fx-background-color: rgba(255,255,255,0); 
     -fx-border-color: rgba(255,255,255,0); 
-    -fx-text-fill: #ea6939; 
+    -fx-text-fill: #0066FF; 
     -fx-font-family: Helvetica Neue; 
     -fx-font-size: 18px; 
     -fx-background-radius: 5 5 5 5
   }
   
   .toggle-button:selected {
-    -fx-background-color: #ea6939; 
+    -fx-background-color: #0066FF; 
     -fx-text-fill: #FFFFFF; 
     -fx-font-family: Helvetica Neue; 
     -fx-font-size: 18px; 
@@ -16,7 +16,7 @@
   }
 
   .toggle-button:selected:hover {
-    -fx-background-color: #ea6939; 
+    -fx-background-color: #0066FF; 
     -fx-text-fill: #FFFFFF; 
     -fx-font-family: Helvetica Neue; 
     -fx-font-size: 18px; 
@@ -24,9 +24,9 @@
   }
   
   .toggle-button:hover {
-    -fx-background-color: rgba(234,105,57,0.3); 
+    -fx-background-color: rgba(0, 102, 255,0.3); 
     -fx-border-color: rgba(255,255,255,0); 
-    -fx-text-fill: #ea6939; 
+    -fx-text-fill: #0066FF; 
     -fx-font-family: Helvetica Neue; 
     -fx-font-size: 18px; 
     -fx-background-radius: 5 5 5 5
