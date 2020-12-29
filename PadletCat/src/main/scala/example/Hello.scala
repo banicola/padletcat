@@ -76,17 +76,16 @@ object Main extends JFXApp {
   var datas             = ListBuffer[(String, Data)]()
   var filterButtonsList = List[ToggleButton]()
   var filters: ListBuffer[Filter] = ListBuffer(
-    Filter("Visites - Canada"),
-    Filter("UNamur weekend"),
-    Filter("Mémoire à Singapour")
+    Filter("Yuzu"),
+    Filter("Moka"),
+    Filter("Clipsy")
   )
-  var tagsName: List[String]      = List("Soirées", "Mémoire", "Visites")
   val toggleGroup: ToggleGroup    = new ToggleGroup();
 
   dbActor ! Load
 
   stage = new PrimaryStage {
-    title = "Erasm'Share"
+    title = "PadletCat"
     width = 1920
     height = 960
 
@@ -134,12 +133,12 @@ object Main extends JFXApp {
 
       // HEADER BEGIN -----------------------------------
 
-      val logo     = new Image("erasmshare.png")
+      val logo     = new Image("padletcat.png")
       val logoView = new ImageView(logo)
 
       val logoHBox = new HBox(20)
       val style =
-        "-fx-background-color: #EA6939; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-font-family: Helvetica Neue; -fx-font-size: 18px;"
+        "-fx-background-color: #0066FF; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-font-family: Helvetica Neue; -fx-font-size: 18px;"
       logoHBox.setStyle(style)
       logoHBox.setPadding(new Insets(10, 0, 0, 0))
 
@@ -151,14 +150,14 @@ object Main extends JFXApp {
       val profile = new Button(username) {
         graphic = profileView
         style =
-          "-fx-background-color: #EA6939; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-font-family: Helvetica Neue; -fx-font-size: 18px;"
+          "-fx-background-color: #0066FF; -fx-text-fill: #FFFFFF; -fx-font-weight: bold; -fx-font-family: Helvetica Neue; -fx-font-size: 18px;"
       }
 
       profile.margin_=(new Insets(20))
       profile.setAlignment(Pos.CenterRight)
 
       val headerHBox = new BorderPane {
-        style = "-fx-background-color: rgb(234,105,57); "
+        style = "-fx-background-color: rgba(0, 102, 255); "
       }
       //headerHBox.setPrefHeight(70)
       headerHBox.setPadding(new Insets(10, 20, 10, 40))
@@ -170,11 +169,11 @@ object Main extends JFXApp {
       // Content begin ---------------------------------------------------------------
 
       val styleFilterSelected =
-        "-fx-background-color: #ea6939; -fx-text-fill: #FFFFFF; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
+        "-fx-background-color: #0066FF; -fx-text-fill: #FFFFFF; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
       val styleFilterHovered =
-        "-fx-background-color: rgba(234,105,57,0.3); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #ea6939; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
+        "-fx-background-color: rgba(0, 102, 255,0.3); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #0066FF; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
       val styleFilterNotSelected =
-        "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #ea6939; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
+        "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #0066FF; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
 
       //display filters from list given
       /*for (filter <- filtersName.toList) {
@@ -197,7 +196,7 @@ object Main extends JFXApp {
       val editFilters = new Button {
         graphic = editImgView
         style =
-          "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #ea6939; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
+          "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #0066FF; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
         padding = new Insets(10)
       }
       editFilters.setAlignment(Pos.CenterRight)
@@ -216,7 +215,7 @@ object Main extends JFXApp {
       val deleteEditFilters = new Button {
         graphic = deleteImgView
         style =
-          "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #ea6939; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
+          "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #0066FF; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
         padding = new Insets(10)
 
       }
@@ -224,14 +223,14 @@ object Main extends JFXApp {
       val cancelEditFilters = new Button {
         graphic = cancelImgView
         style =
-          "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #ea6939; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
+          "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #0066FF; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
         padding = new Insets(10)
       }
 
       val addFilter = new Button {
         graphic = addImgView
         style =
-          "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #ea6939; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
+          "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #0066FF; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
         padding = new Insets(10)
       }
 
@@ -242,7 +241,7 @@ object Main extends JFXApp {
 
       val filterBoxTitle = new Label("Créer un filtre") {
         style =
-          "-fx-background-color: rgb(255,255,255); -fx-text-fill: #ea6939; -fx-font-family: Helvetica Neue; -fx-font-size: 22px;"
+          "-fx-background-color: rgb(255,255,255); -fx-text-fill: #0066FF; -fx-font-family: Helvetica Neue; -fx-font-size: 22px;"
       }
 
       val closeImage     = new Image("close.jpg")
@@ -254,8 +253,8 @@ object Main extends JFXApp {
         }
       }
 
-      val orangeLineFilter = new Line {
-        stroke = rgb(234, 105, 57)
+      val blueLineFilter = new Line {
+        stroke = rgb(0, 102, 255)
         strokeWidth = 2
         startX = 31
         endX = 930
@@ -267,7 +266,7 @@ object Main extends JFXApp {
 
       addFilterTopPane.left = filterBoxTitle
       addFilterTopPane.right = closeImageView
-      addFilterTopPane.bottom = orangeLineFilter
+      addFilterTopPane.bottom = blueLineFilter
 
       val addFilterName = new TextField {
         minWidth = 400
@@ -301,7 +300,7 @@ object Main extends JFXApp {
 
       val createButton = new Button("Créer") {
         style =
-          "-fx-background-color: #EA6939; -fx-text-fill: #FFFFFF; -fx-font-weight: regular; -fx-font-family: Helvetica Neue; -fx-font-size: 16px; -fx-border-color: #ea6939; -fx-background-radius: 5 5 5 5"
+          "-fx-background-color: #0066FF; -fx-text-fill: #FFFFFF; -fx-font-weight: regular; -fx-font-family: Helvetica Neue; -fx-font-size: 16px; -fx-border-color: #0066FF; -fx-background-radius: 5 5 5 5"
         minWidth = 120
         maxWidth = 120
         minHeight = 30
@@ -310,7 +309,7 @@ object Main extends JFXApp {
 
       val cancelButton = new Button("Annuler") {
         style =
-          "-fx-background-color: #FFFFFF; -fx-text-fill: #EA6939; -fx-font-weight: regular; -fx-font-family: Helvetica Neue; -fx-font-size: 16px; -fx-border-color: #EA6939; -fx-background-radius: 5 5 5 5"
+          "-fx-background-color: #FFFFFF; -fx-text-fill: #0066FF; -fx-font-weight: regular; -fx-font-family: Helvetica Neue; -fx-font-size: 16px; -fx-border-color: #0066FF; -fx-background-radius: 5 5 5 5"
         minWidth = 120
         maxWidth = 120
         minHeight = 30
@@ -486,8 +485,8 @@ object Main extends JFXApp {
           fill = rgb(255, 255, 255)
         }
 
-        val orangeLine = new Line {
-          stroke = rgb(234, 105, 57)
+        val blueLine = new Line {
+          stroke = rgb(0, 102, 255)
           strokeWidth = 2
           startX = 0
           endX = 1520
@@ -535,7 +534,7 @@ object Main extends JFXApp {
         val ajoutTitle = new Text {
           text = "Proposer un nouveau contenu"
           style = "-fx-font-size: 22pt"
-          fill = rgb(234, 105, 57)
+          fill = rgb(0, 102, 255)
         }
 
         topBar.left = ajoutTitle
@@ -580,7 +579,7 @@ object Main extends JFXApp {
         val addImageButton = new Button("Ajouter une image") {
           graphic = uploadView
           style =
-            "-fx-background-color: #ffffff; -fx-border-color: #ea6939; -fx-text-fill: #ea6939;"
+            "-fx-background-color: #ffffff; -fx-border-color: #0066FF; -fx-text-fill: #0066FF;"
         }
         addImageButton.onAction = new EventHandler[ActionEvent] {
           override def handle(event: ActionEvent) {
@@ -599,7 +598,7 @@ object Main extends JFXApp {
         val bottomButtons = new HBox(20)
         val cancelButton = new Button("Annuler") {
           style =
-            "-fx-background-color: #ffffff; -fx-border-color: #ea6939; -fx-text-fill: #ea6939;"
+            "-fx-background-color: #ffffff; -fx-border-color: #0066FF; -fx-text-fill: #0066FF;"
           cancelButton = true
         }
         cancelButton.onAction = new EventHandler[ActionEvent] {
@@ -609,7 +608,7 @@ object Main extends JFXApp {
         }
         val publishButton = new Button("Publier") {
           style =
-            "-fx-background-color: #ea6939; -fx-border-color: #ea6939; -fx-text-fill: #ffffff;"
+            "-fx-background-color: #0066FF; -fx-border-color: #0066FF; -fx-text-fill: #ffffff;"
         }
         publishButton.onAction = new EventHandler[ActionEvent] {
           override def handle(event: ActionEvent) {
@@ -653,7 +652,7 @@ object Main extends JFXApp {
 
         addContent.children = List(
           topBar,
-          orangeLine,
+          blueLine,
           values,
           new Label("Composez le texte"),
           description,
@@ -768,7 +767,7 @@ object Main extends JFXApp {
 
     val titleLabel = new Text {
       text = title
-      fill = rgb(234, 105, 57)
+      fill = rgb(0, 102, 255)
       style = "-fx-font-size: 22pt"
       wrappingWidth = 500
     }
