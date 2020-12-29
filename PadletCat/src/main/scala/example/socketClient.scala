@@ -64,17 +64,17 @@ class Socket(remote: InetSocketAddress, simul: ActorRef /*,bdActor*/ ) extends A
             "supposed to receive: " + deballageDuCadeau(
               JacksonWrapper
                 .deserialize[ChristmasGift](
-                  ByteString(JacksonWrapper.serialize(emballageDuCadeau(message))).utf8String
+                  ByteString(JacksonWrapper.serialize(messageSending(message))).utf8String
                 )
             )
           )*/
-          connection ! Write(ByteString(JacksonWrapper.serialize(emballageDuCadeau(message))))
+          connection ! Write(ByteString(JacksonWrapper.serialize(messageSending(message))))
         //case data: ByteString =>
         //connection ! Write(data)
         case CommandFailed(w: Write) =>
         case Received(data) => // c'est ici que l'on récupère les données reçues. One peut les envoyer à l'acteur qui s'occupe de la BD.
           val decoded: BachTInstr =
-            deballageDuCadeau(JacksonWrapper.deserialize[ChristmasGift](data.utf8String))
+            messageReception(JacksonWrapper.deserialize[MessageSend](data.utf8String))
           println(s"They told us: $decoded")
           simul ! decoded
         case "close" =>
@@ -87,8 +87,8 @@ class Socket(remote: InetSocketAddress, simul: ActorRef /*,bdActor*/ ) extends A
   class TCPConnectionHandler(sender: ActorRef, simul: ActorRef) extends Actor { // s'occupe de la communication
     override def receive: Actor.Receive = {
       case Received(data) => // c'est ici que l'on récupère les données reçues. One peut les envoyer à l'acteur qui s'occupe de la BD.
-        val decoded: BachTInstr = deballageDuCadeau(
-          JacksonWrapper.deserialize[ChristmasGift](data.utf8String)
+        val decoded: BachTInstr = messageReception(
+          JacksonWrapper.deserialize[MessageSend](data.utf8String)
         )
         println(s"They told us: $decoded")
         simul ! decoded
@@ -98,37 +98,37 @@ class Socket(remote: InetSocketAddress, simul: ActorRef /*,bdActor*/ ) extends A
       case SendMessage(message) =>
         println("Sending message: " + message)
         /*println(
-          "supposed to receive: " + deballageDuCadeau(
+          "supposed to receive: " + messageReception(
             JacksonWrapper
-              .deserialize[ChristmasGift](
-                ByteString(JacksonWrapper.serialize(emballageDuCadeau(message))).utf8String
+              .deserialize[MessageSend](
+                ByteString(JacksonWrapper.serialize(messageSending(message))).utf8String
               )
           )
         )*/
-        sender ! Write(ByteString(JacksonWrapper.serialize(emballageDuCadeau(message))))
+        sender ! Write(ByteString(JacksonWrapper.serialize(messageSending(message))))
     }
   }
 
-  def deballageDuCadeau(cg: ChristmasGift): BachTInstr =
+  def messageReception(cg: MessageSend): BachTInstr =
     cg match {
-      case ChristmasGift("tell", token, data) =>
+      case MessageSend("tell", token, data) =>
         Tell(token: String, data: Map[String, Data])
-      case ChristmasGift("get", token, data) =>
+      case MessageSend("get", token, data) =>
         Get(token: String, data: Map[String, Data])
-      case ChristmasGift("ask", token, data) =>
+      case MessageSend("ask", token, data) =>
         Ask(token: String, data: Map[String, Data])
-      case ChristmasGift("nask", token, data) =>
+      case MessageSend("nask", token, data) =>
         Nask(token: String, data: Map[String, Data])
     }
-  def emballageDuCadeau(inst: BachTInstr): ChristmasGift =
+  def messageSending(inst: BachTInstr): MessageSend =
     inst match {
       case Tell(token: String, data: Map[String, Data]) =>
-        ChristmasGift("tell", token, data)
+        MessageSend("tell", token, data)
       case Get(token: String, data: Map[String, Data]) =>
-        ChristmasGift("get", token, data)
+        MessageSend("get", token, data)
       case Ask(token: String, data: Map[String, Data]) =>
-        ChristmasGift("ask", token, data)
+        MessageSend("ask", token, data)
       case Nask(token: String, data: Map[String, Data]) =>
-        ChristmasGift("nask", token, data)
+        MessageSend("nask", token, data)
     }
 }

@@ -94,7 +94,7 @@ case class Ask(token: String, data: Map[String, Data])  extends BachTInstr
 case class Get(token: String, data: Map[String, Data])  extends BachTInstr
 case class Nask(token: String, data: Map[String, Data]) extends BachTInstr
 
-case class ChristmasGift(instr: String, token: String, data: Map[String, Data])
+case class MessageSend(instr: String, token: String, data: Map[String, Data])
 
 import scala.util.Random
 import language.postfixOps
