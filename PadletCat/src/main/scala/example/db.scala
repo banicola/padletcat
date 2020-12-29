@@ -73,10 +73,9 @@ class BachTStore(clientName: String) extends Actor {
       }
 
       statement = connection.prepareStatement(
-        "INSERT INTO content (id, location, owner,image, video, description, title,date) VALUES (?, ?,?, ?,?, ?,?,?)"
+        "INSERT INTO content (id, owner,image, video, description, title,date) VALUES (?, ?, ?, ?, ?,?,?)"
       )
       statement.setString(1, id)
-      statement.setString(2, lesDatas.location)
       statement.setString(3, lesDatas.owner)
       statement.setString(4, lesDatas.image)
       statement.setString(5, lesDatas.video)
@@ -85,14 +84,6 @@ class BachTStore(clientName: String) extends Actor {
       statement.setString(8, lesDatas.date)
       statement.executeUpdate()
 
-      lesDatas.tags.map { tag =>
-        statement = connection.prepareStatement(
-          "INSERT INTO tag (name,contentId) VALUES (?, ?)"
-        )
-        statement.setString(1, tag)
-        statement.setString(2, id)
-        statement.executeUpdate()
-      }
       gui ! AddToGui(id, lesDatas)
 
       result = true
@@ -137,28 +128,14 @@ class BachTStore(clientName: String) extends Actor {
         while (rs.next()) {
 
           val id       = rs.getString("id")
-          val location = rs.getString("location")
           val owner    = rs.getString("owner")
           val date     = rs.getString("date")
           val title    = rs.getString("title")
           val description     = rs.getString("description")
           val image    = rs.getString("image")
           val video    = rs.getString("video")
-          var tags     = new ListBuffer[String]()
 
-          val statement2 = connection.prepareStatement(
-            "SELECT * FROM tag t WHERE t.contentId = ?"
-          )
-          statement2.setString(1, id)
-          var rsTag = statement2.executeQuery()
-
-          while (rsTag.next()) {
-            println("tags:")
-            println(rsTag.getString("name"))
-
-            tags += rsTag.getString("name")
-          }
-          gui ! AddToGui(id, Data(owner, date, image, video, title, description, location, tags.toList))
+          gui ! AddToGui(id, Data(owner, date, image, video, title, description))
         }
       } else {
         var statement = connection.prepareStatement(
@@ -175,22 +152,14 @@ class BachTStore(clientName: String) extends Actor {
         var rsTag = statement.executeQuery()
 
         val id       = rs.getString("id")
-        val location = rs.getString("location")
         val owner    = rs.getString("owner")
         val date     = rs.getString("date")
         val title    = rs.getString("title")
         val description     = rs.getString("description")
         val image    = rs.getString("image")
         val video    = rs.getString("video")
-        var tags     = List()
 
-        while (rsTag.next()) {
-          println("tags:")
-          println(rsTag.getString("name"))
-          tags +: rsTag.getString("name")
-        }
-
-        gui ! RemoveFromGui(id, Data(owner, date, image, video, title, description, location, tags))
+        gui ! RemoveFromGui(id, Data(owner, date, image, video, title, description))
         statement = connection.prepareStatement("DELETE FROM content WHERE id=?")
         statement.setString(1, token)
         statement.executeUpdate()
@@ -207,7 +176,6 @@ class BachTStore(clientName: String) extends Actor {
     // vérifier si l'élément n'est pas présent
     !ask(token, data)
   }
-
 }
 
 case class Data(
@@ -216,7 +184,5 @@ case class Data(
     var image: String,
     var video: String,
     var title: String,
-    var description: String,
-    var location: String,
-    var tags: List[String]
+    var description: String
 )
