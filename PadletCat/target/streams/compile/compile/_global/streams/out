@@ -1,4 +1,242 @@
-[0m[[0m[33mwarn[0m] [0m[0mC:\Users\User\Desktop\Projet jacquet\padletcat\PadletCat\src\main\scala\example\Hello.scala:415:33: Reference to uninitialized value filtersHBox[0m
-[0m[[0m[33mwarn[0m] [0m[0m      filtersEditionPane.left = filtersHBox[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:52:11: not enough arguments for constructor BachTSimul: (bb: example.BachTStore)example.BachTSimul.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter bb.[0m
+[0m[[0m[31merror[0m] [0m[0m    Props(new BachTSimul()),[0m
+[0m[[0m[31merror[0m] [0m[0m          ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:76:47: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m  var datas             = ListBuffer[(String, Data)]()[0m
+[0m[[0m[31merror[0m] [0m[0m                                              ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:704:41: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m  def setGui(datas: ListBuffer[(String, Data)]): Unit = {[0m
+[0m[[0m[31merror[0m] [0m[0m                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:281:30: not found: value tagsName[0m
+[0m[[0m[31merror[0m] [0m[0m      val tag = new ComboBox(tagsName) {[0m
+[0m[[0m[31merror[0m] [0m[0m                             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:281:21: too many arguments for constructor Object: ()Object[0m
+[0m[[0m[31merror[0m] [0m[0m      val tag = new ComboBox(tagsName) {[0m
+[0m[[0m[31merror[0m] [0m[0m                    ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:371:49: not found: value localisation[0m
+[0m[[0m[31merror[0m] [0m[0m          if (addFilterName.text.value != "" && localisation.value.value != null && tag.value.value != null) {[0m
+[0m[[0m[31merror[0m] [0m[0m                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:371:89: value value is not a member of AnyRef[0m
+[0m[[0m[31merror[0m] [0m[0m          if (addFilterName.text.value != "" && localisation.value.value != null && tag.value.value != null) {[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:372:30: too many arguments for method apply: (name: String)example.Main.Filter in object Filter[0m
+[0m[[0m[31merror[0m] [0m[0m            filters += Filter([0m
+[0m[[0m[31merror[0m] [0m[0m                             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:552:32: not found: value tagsName[0m
+[0m[[0m[31merror[0m] [0m[0m        val tag = new ComboBox(tagsName) {[0m
+[0m[[0m[31merror[0m] [0m[0m                               ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:552:23: too many arguments for constructor Object: ()Object[0m
+[0m[[0m[31merror[0m] [0m[0m        val tag = new ComboBox(tagsName) {[0m
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:561:27: not found: value vboxLocalisation[0m
+[0m[[0m[31merror[0m] [0m[0m          List(vboxTitre, vboxLocalisation, addLocalisationView, vboxTag, addFilterView)[0m
+[0m[[0m[31merror[0m] [0m[0m                          ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:620:75: not found: value localisation[0m
+[0m[[0m[31merror[0m] [0m[0m            if (titre.text.value != "" && description.text.value != "" && localisation.value.value != null && tag.value.value != null) {[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:620:115: value value is not a member of AnyRef[0m
+[0m[[0m[31merror[0m] [0m[0m            if (titre.text.value != "" && description.text.value != "" && localisation.value.value != null && tag.value.value != null) {[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:629:28: too many arguments for method apply: (owner: String, date: String, image: String, video: String, title: String, text: String, tags: List[String])example.Add in object Add[0m
+[0m[[0m[31merror[0m] [0m[0m              dbActor ! Add([0m
+[0m[[0m[31merror[0m] [0m[0m                           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:688:34: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m  def addToGui(id: String, data: Data): Unit = {[0m
+[0m[[0m[31merror[0m] [0m[0m                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:722:14: value owner is not a member of Any[0m
+[0m[[0m[31merror[0m] [0m[0m        data.owner,[0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:723:14: value date is not a member of Any[0m
+[0m[[0m[31merror[0m] [0m[0m        data.date,[0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:724:14: value title is not a member of Any[0m
+[0m[[0m[31merror[0m] [0m[0m        data.title,[0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:725:14: value description is not a member of Any[0m
+[0m[[0m[31merror[0m] [0m[0m        data.description,[0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:726:14: value image is not a member of Any[0m
+[0m[[0m[31merror[0m] [0m[0m        data.image,[0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:727:14: value video is not a member of Any[0m
+[0m[[0m[31merror[0m] [0m[0m        data.video[0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:841:18: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m    val content: Data = Data([0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:841:25: not found: value Data[0m
+[0m[[0m[31merror[0m] [0m[0m    val content: Data = Data([0m
+[0m[[0m[31merror[0m] [0m[0m                        ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:852:13: not found: value Command[0m
+[0m[[0m[31merror[0m] [0m[0m    simul ! Command(s"tell($x)", Map(x.toString -> content))[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:866:40: not found: value Command[0m
+[0m[[0m[31merror[0m] [0m[0m    case Remove(id: String) => simul ! Command(s"get($id)", Map())[0m
+[0m[[0m[31merror[0m] [0m[0m                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:867:40: not found: value Command[0m
+[0m[[0m[31merror[0m] [0m[0m    case Load               => simul ! Command("get(All)", Map())[0m
+[0m[[0m[31merror[0m] [0m[0m                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:868:13: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m    case x: Data            =>[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:897:39: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0mcase class AddToGui(id: String, data: Data)      extends Message[0m
+[0m[[0m[31merror[0m] [0m[0m                                      ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:873:37: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m    case AddToGui(id: String, data: Data) =>[0m
+[0m[[0m[31merror[0m] [0m[0m                                    ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:898:44: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0mcase class RemoveFromGui(id: String, data: Data) extends Message[0m
+[0m[[0m[31merror[0m] [0m[0m                                           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:878:42: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m    case RemoveFromGui(id: String, data: Data) =>[0m
+[0m[[0m[31merror[0m] [0m[0m                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:14:33: not found: type BachTInstr[0m
+[0m[[0m[31merror[0m] [0m[0mcase class SendMessage(message: BachTInstr)[0m
+[0m[[0m[31merror[0m] [0m[0m                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:107:28: not found: type BachTInstr[0m
+[0m[[0m[31merror[0m] [0m[0m  def messageSending(inst: BachTInstr): MessageSend =[0m
+[0m[[0m[31merror[0m] [0m[0m                           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:96:42: not found: type BachTInstr[0m
+[0m[[0m[31merror[0m] [0m[0m  def messageReception(cg: MessageSend): BachTInstr =[0m
+[0m[[0m[31merror[0m] [0m[0m                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:68:24: not found: type BachTInstr[0m
+[0m[[0m[31merror[0m] [0m[0m          val decoded: BachTInstr =[0m
+[0m[[0m[31merror[0m] [0m[0m                       ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:82:22: not found: type BachTInstr[0m
+[0m[[0m[31merror[0m] [0m[0m        val decoded: BachTInstr = messageReception([0m
+[0m[[0m[31merror[0m] [0m[0m                     ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:98:23: wrong number of arguments for pattern example.MessageSend(instr: String,token: String)[0m
+[0m[[0m[31merror[0m] [0m[0m      case MessageSend("tell", token, data) =>[0m
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:99:9: not found: value Tell[0m
+[0m[[0m[31merror[0m] [0m[0m        Tell(token: String, data: Map[String, Data])[0m
+[0m[[0m[31merror[0m] [0m[0m        ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:99:47: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m        Tell(token: String, data: Map[String, Data])[0m
+[0m[[0m[31merror[0m] [0m[0m                                              ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:100:23: wrong number of arguments for pattern example.MessageSend(instr: String,token: String)[0m
+[0m[[0m[31merror[0m] [0m[0m      case MessageSend("get", token, data) =>[0m
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:101:9: not found: value Get[0m
+[0m[[0m[31merror[0m] [0m[0m        Get(token: String, data: Map[String, Data])[0m
+[0m[[0m[31merror[0m] [0m[0m        ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:101:46: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m        Get(token: String, data: Map[String, Data])[0m
+[0m[[0m[31merror[0m] [0m[0m                                             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:102:23: wrong number of arguments for pattern example.MessageSend(instr: String,token: String)[0m
+[0m[[0m[31merror[0m] [0m[0m      case MessageSend("ask", token, data) =>[0m
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:103:9: not found: value Ask[0m
+[0m[[0m[31merror[0m] [0m[0m        Ask(token: String, data: Map[String, Data])[0m
+[0m[[0m[31merror[0m] [0m[0m        ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:103:46: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m        Ask(token: String, data: Map[String, Data])[0m
+[0m[[0m[31merror[0m] [0m[0m                                             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:104:23: wrong number of arguments for pattern example.MessageSend(instr: String,token: String)[0m
+[0m[[0m[31merror[0m] [0m[0m      case MessageSend("nask", token, data) =>[0m
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:105:9: not found: value Nask[0m
+[0m[[0m[31merror[0m] [0m[0m        Nask(token: String, data: Map[String, Data])[0m
+[0m[[0m[31merror[0m] [0m[0m        ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:105:47: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m        Nask(token: String, data: Map[String, Data])[0m
+[0m[[0m[31merror[0m] [0m[0m                                              ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:109:12: not found: value Tell[0m
+[0m[[0m[31merror[0m] [0m[0m      case Tell(token: String, data: Map[String, Data]) =>[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:109:50: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m      case Tell(token: String, data: Map[String, Data]) =>[0m
+[0m[[0m[31merror[0m] [0m[0m                                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:110:20: too many arguments for method apply: (instr: String, token: String)example.MessageSend in object MessageSend[0m
+[0m[[0m[31merror[0m] [0m[0m        MessageSend("tell", token, data)[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:111:12: not found: value Get[0m
+[0m[[0m[31merror[0m] [0m[0m      case Get(token: String, data: Map[String, Data]) =>[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:111:49: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m      case Get(token: String, data: Map[String, Data]) =>[0m
+[0m[[0m[31merror[0m] [0m[0m                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:112:20: too many arguments for method apply: (instr: String, token: String)example.MessageSend in object MessageSend[0m
+[0m[[0m[31merror[0m] [0m[0m        MessageSend("get", token, data)[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:113:12: not found: value Ask[0m
+[0m[[0m[31merror[0m] [0m[0m      case Ask(token: String, data: Map[String, Data]) =>[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:113:49: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m      case Ask(token: String, data: Map[String, Data]) =>[0m
+[0m[[0m[31merror[0m] [0m[0m                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:114:20: too many arguments for method apply: (instr: String, token: String)example.MessageSend in object MessageSend[0m
+[0m[[0m[31merror[0m] [0m[0m        MessageSend("ask", token, data)[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:115:12: not found: value Nask[0m
+[0m[[0m[31merror[0m] [0m[0m      case Nask(token: String, data: Map[String, Data]) =>[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:115:50: not found: type Data[0m
+[0m[[0m[31merror[0m] [0m[0m      case Nask(token: String, data: Map[String, Data]) =>[0m
+[0m[[0m[31merror[0m] [0m[0m                                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\SocketClient.scala:116:20: too many arguments for method apply: (instr: String, token: String)example.MessageSend in object MessageSend[0m
+[0m[[0m[31merror[0m] [0m[0m        MessageSend("nask", token, data)[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:47:49: not enough arguments for method apply: (primitive: String, token: String, title: String, content: String)example.bacht_ast_primitive in object bacht_ast_primitive.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameters title, content.[0m
+[0m[[0m[31merror[0m] [0m[0m      case _ ~ vtoken ~ _ => bacht_ast_primitive("ask", vtoken)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:50:14: constructor cannot be instantiated to expected type;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : BachTParsers.this.~[a,b][0m
+[0m[[0m[31merror[0m] [0m[0m required: String[0m
+[0m[[0m[31merror[0m] [0m[0m      case _ ~ vtoken ~ vauthor ~ _ => bacht_ast_primitive("get", vtoken)[0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:50:59: not enough arguments for method apply: (primitive: String, token: String, title: String, content: String)example.bacht_ast_primitive in object bacht_ast_primitive.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameters title, content.[0m
+[0m[[0m[31merror[0m] [0m[0m      case _ ~ vtoken ~ vauthor ~ _ => bacht_ast_primitive("get", vtoken)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:53:14: constructor cannot be instantiated to expected type;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : BachTParsers.this.~[a,b][0m
+[0m[[0m[31merror[0m] [0m[0m required: String[0m
+[0m[[0m[31merror[0m] [0m[0m      case _ ~ vtoken ~ vauthor ~ _ => bacht_ast_primitive("nask", vtoken)[0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:53:59: not enough arguments for method apply: (primitive: String, token: String, title: String, content: String)example.bacht_ast_primitive in object bacht_ast_primitive.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameters title, content.[0m
+[0m[[0m[31merror[0m] [0m[0m      case _ ~ vtoken ~ vauthor ~ _ => bacht_ast_primitive("nask", vtoken)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:109:16: not found: value context[0m
+[0m[[0m[31merror[0m] [0m[0m  val socket = context.actorOf([0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:110:60: not found: value self[0m
+[0m[[0m[31merror[0m] [0m[0m    Socket.props(new InetSocketAddress("localhost", 8080), self /*,bdActor*/ ),[0m
+[0m[[0m[31merror[0m] [0m[0m                                                           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:122:17: missing parameter type for expanded function[0m
+[0m[[0m[31merror[0m] [0m[0mThe argument types of an anonymous function must be fully known. (SLS 8.5)[0m
+[0m[[0m[31merror[0m] [0m[0mExpected type was: ?[0m
+[0m[[0m[31merror[0m] [0m[0m  def receive = {[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:125:15: not found: value context[0m
+[0m[[0m[31merror[0m] [0m[0m      store = context.actorOf([0m
+[0m[[0m[31merror[0m] [0m[0m              ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:126:15: too many arguments for constructor BachTStore: ()example.BachTStore[0m
+[0m[[0m[31merror[0m] [0m[0m        Props(new BachTStore(username)),[0m
+[0m[[0m[31merror[0m] [0m[0m              ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:129:18: not found: value sender[0m
+[0m[[0m[31merror[0m] [0m[0m    case Init => sender ! username[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:130:10: not found: value Command[0m
+[0m[[0m[31merror[0m] [0m[0m    case Command(command, data) => // prend en "argument" la commende écrite en BachT et les données manipulées.[0m
+[0m[[0m[31merror[0m] [0m[0m         ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:133:13: not found: type BachTInstr[0m
+[0m[[0m[31merror[0m] [0m[0m    case i: BachTInstr =>[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:157:16: too many arguments for method run_one: (agent: example.Expr)(Boolean, example.Expr)[0m
+[0m[[0m[31merror[0m] [0m[0m        run_one(ag_i, data) match {[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:160:79: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Any[0m
+[0m[[0m[31merror[0m] [0m[0m required: example.Expr[0m
+[0m[[0m[31merror[0m] [0m[0m          case (true, ag_cont)                 => (true, bacht_ast_agent(";", ag_cont, ag_ii))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                              ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\bacht_cli.scala:258:29: not enough arguments for method tell: (token: String, title: String, content: String)Boolean.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameters title, content.[0m
+[0m[[0m[31merror[0m] [0m[0m      case "tell" => bb.tell(token)[0m
+[0m[[0m[31merror[0m] [0m[0m                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m76 errors found[0m
