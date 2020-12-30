@@ -71,7 +71,7 @@ object Main extends JFXApp {
     style = "-fx-background-color:transparent"
   }
 
-  case class Filter(val name: String, val tag: String)
+  case class Filter(val name: String, val race: String)
 
   var datas             = ListBuffer[(String, Data)]()
   var filterButtonsList = List[ToggleButton]()
@@ -80,7 +80,7 @@ object Main extends JFXApp {
     Filter("Moka", "Soirées"),
     Filter("Clipsy", "Mémoire")
   )
-  var tagsName: List[String]      = List("Soirées", "Mémoire", "Visites")
+  var raceName: List[String]      = List("Soirées", "Mémoire", "Visites")
   val toggleGroup: ToggleGroup    = new ToggleGroup();
 
   dbActor ! Load
@@ -279,18 +279,18 @@ object Main extends JFXApp {
       val vboxTitre = new VBox
       vboxTitre.children = List(labelTitre, addFilterName)
 
-      val tag = new ComboBox(tagsName) {
+      val race = new ComboBox(raceName) {
         minWidth = 185
         maxWidth = 185
       }
-      val labelTag = new Label("Tags")
-      val vboxTag  = new VBox
-      vboxTag.children = List(labelTag, tag)
+      val labelRace = new Label("Race")
+      val vboxRace  = new VBox
+      vboxRace.children = List(labelRace, race)
 
       val contentAddFilterPane = new HBox(20)
       contentAddFilterPane.setStyle("-fx-background-color: rgb(255,255,255);")
       contentAddFilterPane.setPadding(new Insets(0, 30, 0, 30))
-      contentAddFilterPane.children = List(vboxTitre, vboxTag)
+      contentAddFilterPane.children = List(vboxTitre, vboxRace)
 
       val greyLineFilter = new Line {
         stroke = rgb(150, 150, 150)
@@ -369,10 +369,10 @@ object Main extends JFXApp {
       createButton.onMouseClicked = new EventHandler[MouseEvent] {
         override def handle(event: MouseEvent) {
           println("create add filter")
-          if (addFilterName.text.value != "" && tag.value.value != null) {
+          if (addFilterName.text.value != "" && race.value.value != null) {
             filters += Filter(
               addFilterName.text.value,
-              tag.value.value
+              race.value.value
             )
             filterButtonsList = createFiltersButton()
             filterButtonsList.map(_.setToggleGroup(toggleGroup))
@@ -541,16 +541,16 @@ object Main extends JFXApp {
         val vboxTitre  = new VBox
         vboxTitre.children = List(labelTitre, titre)
 
-        val tag = new ComboBox(tagsName) {
+        val race = new ComboBox(raceName) {
           minWidth = 200
           maxWidth = 200
         }
-        val labelTag = new Label("Tags")
-        val vboxTag  = new VBox
-        vboxTag.children = List(labelTag, tag)
+        val labelRace = new Label("Race")
+        val vboxRace  = new VBox
+        vboxRace.children = List(labelRace, race)
 
         values.children =
-          List(vboxTitre, vboxTag)
+          List(vboxTitre, vboxRace)
 
         val description = new TextArea {
           wrapText = true
@@ -609,7 +609,7 @@ object Main extends JFXApp {
             val date                 = dateFormatter.format(submittedDateConvert)
             var encodedfile: String  = ""
 
-            if (titre.text.value != "" && description.text.value != "" && tag.value.value != null) {
+            if (titre.text.value != "" && description.text.value != "" && race.value.value != null) {
               if (selectedImage != null) {
                 //transform file to string
 
@@ -625,7 +625,7 @@ object Main extends JFXApp {
                 video.text.value,
                 titre.text.value,
                 description.text.value,
-                List(tag.value.value)
+                List(race.value.value)
               )
 
               mainStack.children.remove(ajoutContenu)
@@ -701,7 +701,7 @@ object Main extends JFXApp {
           x.name == toggleGroup.getSelectedToggle.getUserData().toString()
         }.head
       datas.toList.filter { x =>
-        x._2.race.contains(filter.tag)
+        x._2.race.contains(filter.race)
       }
     } else {
       datas.toList
@@ -713,7 +713,7 @@ object Main extends JFXApp {
         data.author,
         data.date,
         data.title,
-        data.description,
+        data.text,
         data.image,
         data.video
       )
@@ -722,7 +722,7 @@ object Main extends JFXApp {
 
   def contentCell(
       contentID: String,
-      owner: String,
+      author: String,
       date: String,
       title: String,
       text: String,
@@ -734,7 +734,7 @@ object Main extends JFXApp {
     val deleteButtonView = new ImageView(deleteButton)
     deleteButtonView.onMouseClicked = new EventHandler[MouseEvent] {
       override def handle(event: MouseEvent) {
-        if (username == owner) {
+        if (username == author) {
           dbActor ! Remove(contentID)
         } else {
           println("L'utilisateur n'a pas la permission de supprimer ce contenu")
@@ -746,7 +746,7 @@ object Main extends JFXApp {
     deleteHBox.right = deleteButtonView
 
     val userLabel = new Text {
-      text = owner
+      text = author
       fill = rgb(72, 72, 72)
       font = Font("Helvetica", FontPosture.Italic, 14d)
     }
@@ -776,7 +776,7 @@ object Main extends JFXApp {
     val contentPane = new VBox(10) {
       maxWidth = 500
     }
-    if (username == owner) {
+    if (username == author) {
       contentPane.children += deleteHBox
     }
     contentPane.children += topBar
@@ -821,22 +821,22 @@ object Main extends JFXApp {
 class DBActor(simul: ActorRef) extends Actor {
 
   def addContent(
-      owner: String,
+      author: String,
       date: String,
       image: String,
       video: String,
       title: String,
       text: String,
-      tags: List[String]
+      race: List[String]
   ) = {
     val content: Data = Data(
-      owner,
+      author,
       date,
       image,
       video,
       title,
       text,
-      tags
+      race
     )
     val x = Random.nextInt(Integer.MAX_VALUE)
     println(x.toString)
@@ -845,17 +845,17 @@ class DBActor(simul: ActorRef) extends Actor {
 
   def receive = {
     case Add(
-        owner: String,
+        author: String,
         date: String,
         image: String,
         video: String,
         title: String,
         text: String,
-        tags: List[String]
+        race: List[String]
         ) =>
-      addContent(owner, date, image, video, title, text, tags)
-    case Remove(id: String) => simul ! Command(s"get($id)", Map())
-    case Load               => simul ! Command("get(All)", Map())
+      addContent(author, date, image, video, title, text, race)
+    case Remove(id: String) => simul ! Command(s"get($id)", Map[String,Data]())
+    case Load               => simul ! Command("get(All)", Map[String,Data]())
     case x: Data            =>
       //println(s"le get a renvoyé $x et l'a supprimé")
       println(s"le get a supprimé l'élément $x")
@@ -876,13 +876,13 @@ class DBActor(simul: ActorRef) extends Actor {
 
 sealed trait Message
 case class Add(
-    owner: String,
+    author: String,
     date: String,
     image: String,
     video: String,
     title: String,
     text: String,
-    tags: List[String]
+    race: List[String]
 ) extends Message
 case class Remove(id: String)                    extends Message
 case class AddToGui(id: String, data: Data)      extends Message

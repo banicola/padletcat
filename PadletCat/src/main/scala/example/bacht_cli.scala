@@ -258,11 +258,7 @@ class BachTSimul() extends Actor {
   // J'ai  rajouté "data" afin de faciliter l'utilisation de bachT.
   // De plus, au lieu d'appeler directement le store, on lui envois un message avec "?" et attendons la reponse (Boolean
   // De plus, pour tell et get, on envois l'instruction à l'auttre app afin qu'elles aient les mêmes données.
-  def exec_primitive(
-      prim: String,
-      token: String,
-      data: Map[String, Data]
-  ): Boolean = {
+  def exec_primitive(prim: String, token: String, data: Map[String, Data]): Boolean = {
     val response = prim match {
       case "tell" =>
         println("envois au socket")

@@ -32,13 +32,18 @@ class BachTStore(clientName: String) extends Actor {
       println("received a BachTInstr: "+x)
       x match {
         case Tell(token: String, data: Map[String, Data]) =>
+          println("tell")
           sender ! tell(token, data)
         case Ask(token: String, data: Map[String, Data]) =>
+          println("ask")
           sender ! ask(token, data)
         case Get(token: String, data: Map[String, Data]) =>
+          println("get")
           sender ! get(token, data)
         case Nask(token: String, data: Map[String, Data]) =>
+          println("nask")
           sender ! nask(token, data)
+        case _ => println("Match nothing")
       }
     case a: ActorRef =>
       println("gui actor defined")
@@ -82,7 +87,7 @@ class BachTStore(clientName: String) extends Actor {
       }
       else {
         false
-        }
+      }
     }
 
   }
@@ -103,7 +108,7 @@ case class Data(
     var image: String,
     var video: String,
     var title: String,
-    var description: String,
+    var text: String,
     var race: List[String]
 )
 
