@@ -39,6 +39,7 @@ import scala.concurrent.{Future}
 import akka.pattern.{ask, pipe}
 import java.util.concurrent.TimeUnit.SECONDS
 import scala.concurrent.Await
+import scala.collection.mutable.Map
 
 object Main extends JFXApp {
   println("Starting")

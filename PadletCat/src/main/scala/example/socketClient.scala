@@ -5,6 +5,7 @@ import akka.io.{IO, Tcp}
 import akka.util.ByteString
 import akka.io.Tcp._
 import akka.actor._
+import scala.collection.mutable.Map
 
 object Socket {
   def props(remote: InetSocketAddress, simul: ActorRef /*,bdActor:ActorRef*/ ) =

@@ -19,6 +19,7 @@ import scala.util.parsing.combinator._
 import scala.util.matching.Regex
 import akka.actor._
 import java.net.InetSocketAddress
+import scala.collection.mutable.Map
 
 import akka.util.Timeout
 import scala.concurrent.{Future}
@@ -267,8 +268,10 @@ class BachTSimul() extends Actor {
       case "ask" => store ? Ask(token, data)
       case "get" =>
         if (token != "All") {
+          println("!= All")
           socket ! SendMessage(Get(token, data))
         }
+        println("== All")
         store ? Get(token, data)
       case "nask" => store ? Nask(token, data)
     }
