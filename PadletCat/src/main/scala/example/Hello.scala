@@ -679,7 +679,7 @@ object Main extends JFXApp {
 
   def addToGui(id: String, data: Data): Unit = {
     datas += ((id, data))
-
+    println("addedToGUI")
     setGui(datas)
   }
 
@@ -689,7 +689,7 @@ object Main extends JFXApp {
         datas -= content
       }
     }
-
+    println("removedFromGUI")
     setGui(datas)
   }
 
@@ -867,7 +867,7 @@ class DBActor(simul: ActorRef) extends Actor {
       Platform.runLater(
         Main.addToGui(id, data)
       )
-    case RemoveFromGui(id: String, data: Data) =>
+    case RemoveFromGui(id: String) =>
       Platform.runLater(
         Main.removeFromGui(id)
       )
@@ -887,5 +887,5 @@ case class Add(
 ) extends Message
 case class Remove(id: String)                    extends Message
 case class AddToGui(id: String, data: Data)      extends Message
-case class RemoveFromGui(id: String, data: Data) extends Message
+case class RemoveFromGui(id: String) extends Message
 case object Load                                 extends Message

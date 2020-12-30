@@ -268,10 +268,8 @@ class BachTSimul() extends Actor {
       case "ask" => store ? Ask(token, data)
       case "get" =>
         if (token != "All") {
-          println("!= All")
           socket ! SendMessage(Get(token, data))
         }
-        println("== All")
         store ? Get(token, data)
       case "nask" => store ? Nask(token, data)
     }
