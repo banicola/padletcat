@@ -76,11 +76,11 @@ object Main extends JFXApp {
   var datas             = ListBuffer[(String, Data)]()
   var filterButtonsList = List[ToggleButton]()
   var filters: ListBuffer[Filter] = ListBuffer(
-    Filter("Yuzu", "Visites"),
-    Filter("Moka", "Soirées"),
-    Filter("Clipsy", "Mémoire")
+    Filter("Yuzu", "Chartreux"),
+    Filter("Moka", "Norvégien"),
+    Filter("Clipsy", "Munchkin")
   )
-  var raceName: List[String]      = List("Soirées", "Mémoire", "Visites")
+  var raceName: List[String]      = List("American shorthair", "Chartreux", "Maine coon","Munchkin","Norvégien","Persan","Siamois","Sibérien")
   val toggleGroup: ToggleGroup    = new ToggleGroup();
 
   dbActor ! Load
@@ -301,7 +301,7 @@ object Main extends JFXApp {
 
       val createButton = new Button("Créer") {
         style =
-          "-fx-background-color: #0066FF; -fx-text-fill: #FFFFFF; -fx-font-weight: regular; -fx-font-family: Helvetica Neue; -fx-font-size: 16px; -fx-border-color: #0066FF; -fx-background-radius: 5 5 5 5"
+          "-fx-background-color: #0066FF; -fx-text-fill: #FFFFFF; <font-weight>: regular; -fx-font-family: Helvetica Neue; -fx-font-size: 16px; -fx-border-color: #0066FF; -fx-background-radius: 5 5 5 5"
         minWidth = 120
         maxWidth = 120
         minHeight = 30
@@ -310,7 +310,7 @@ object Main extends JFXApp {
 
       val cancelButton = new Button("Annuler") {
         style =
-          "-fx-background-color: #FFFFFF; -fx-text-fill: #0066FF; -fx-font-weight: regular; -fx-font-family: Helvetica Neue; -fx-font-size: 16px; -fx-border-color: #0066FF; -fx-background-radius: 5 5 5 5"
+          "-fx-background-color: #FFFFFF; -fx-text-fill: #0066FF; <font-weight>: regular; -fx-font-family: Helvetica Neue; -fx-font-size: 16px; -fx-border-color: #0066FF; -fx-background-radius: 5 5 5 5"
         minWidth = 120
         maxWidth = 120
         minHeight = 30
