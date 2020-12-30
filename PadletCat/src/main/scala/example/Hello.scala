@@ -770,6 +770,13 @@ object Main extends JFXApp {
       wrappingWidth = 500
     }
 
+    val videoLabel = new Text {
+      text = video
+      fill = rgb(102, 163, 255)
+      style = "-fx-font-size: 10pt"
+      wrappingWidth = 500
+    }
+
     val topBar = new BorderPane
     topBar.left = userLabel
     topBar.right = dateLabel
@@ -783,6 +790,7 @@ object Main extends JFXApp {
     contentPane.children += topBar
     contentPane.children += titleLabel
     contentPane.children += texte
+    contentPane.children += videoLabel
     contentPane.setPadding(new Insets(20))
 
     if (image != "") {
