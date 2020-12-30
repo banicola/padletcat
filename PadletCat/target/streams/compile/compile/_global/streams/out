@@ -1,4 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\Hello.scala:404:33: Reference to uninitialized value filtersHBox[0m
-[0m[[0m[33mwarn[0m] [0m[0m      filtersEditionPane.left = filtersHBox[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\User\Desktop\Test projet jacquet\padletcat\PadletCat\src\main\scala\example\BachTStore.scala:80:43: T0 does not take parameters[0m
+[0m[[0m[31merror[0m] [0m[0m        var result_data = data.get(token) asInstanceOf Data[0m
+[0m[[0m[31merror[0m] [0m[0m                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

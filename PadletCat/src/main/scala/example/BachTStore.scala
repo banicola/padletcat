@@ -1,12 +1,139 @@
 package example
 
-import java.sql.{Connection, DriverManager, Statement}
+
 import akka.actor._
-import java.sql.ResultSet
 import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.Map
+import scala.swing._
+
+/* --------------------------------------------------------------------------
+
+   The BachT store
+
+
+   AUTHOR : J.-M. Jacquet and D. Darquennes
+   DATE   : March 2016
+
+----------------------------------------------------------------------------*/
 
 class BachTStore(clientName: String) extends Actor {
 
+  var theStore = Map[String,Data]()
+  var gui: ActorRef = _
+
+  /**
+    *  On recoit soit des instruction classique provenant initalement de la GUI
+    *  Soit des instruction "NoFeedback" provenant de l'autre app et ne demandant pas de réponse.
+    *  Les reponses sont envoyées dans les fonctions, au client. (varibale client)
+    *  Les réponses au "sender" sont destinées au BachTSimul afin de savoir si la commande c'est bien exécutée.
+    */
+  def receive = {
+    case x: BachTInstr =>
+      println("received a BachTInstr: "+x)
+      x match {
+        case Tell(token: String, data: Map[String, Data]) =>
+          sender ! tell(token, data)
+        case Ask(token: String, data: Map[String, Data]) =>
+          sender ! ask(token, data)
+        case Get(token: String, data: Map[String, Data]) =>
+          sender ! get(token, data)
+        case Nask(token: String, data: Map[String, Data]) =>
+          sender ! nask(token, data)
+      }
+    case a: ActorRef =>
+      println("gui actor defined")
+      gui = a
+    case _ => println("received smth strange")
+
+  }
+
+  def tell(token: String, data: Map[String, Data]): Boolean = {
+
+    println("Enter the tell")
+
+    val lesDatas        = data(token)
+    var result: Boolean = false
+
+    if (!theStore.contains(token)) {
+      theStore = theStore ++ Map(token -> lesDatas)
+      result = true
+    }
+
+    gui ! AddToGui(token, lesDatas)
+
+    result
+  }
+
+  def isEmpty():Boolean = theStore.isEmpty
+
+  def ask(token:String, data: Map[String, Data]):Boolean = {
+    theStore.contains(token)
+  }
+
+  def get(token:String, data: Map[String, Data]):Boolean = {
+    if(token=="All"){
+      data foreach {case (key, value) => gui ! AddToGui(key, value)}
+      true
+    } else {
+      if (theStore.contains(token) && theStore.get(token).get.author == data.get(token).get.author) {
+        theStore.remove(token)
+        gui ! RemoveFromGui(token, data.get(token).get)
+        true
+      }
+      else {
+        false
+        }
+    }
+
+  }
+
+  def nask(token:String, data: Map[String, Data]):Boolean = {
+    !theStore.contains(token)
+  }
+
+  def clear_store {
+    theStore = Map[String,Data]()
+  }
+
+}
+
+case class Data(
+    var author: String,
+    var date: String,
+    var image: String,
+    var video: String,
+    var title: String,
+    var description: String,
+    var race: List[String]
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
   // chaque utilisateur a une DB.
   var dbname = if (clientName == "A") {
     "bacht"
@@ -176,14 +303,4 @@ class BachTStore(clientName: String) extends Actor {
     // vérifier si l'élément n'est pas présent
     !ask(token, data)
   }
-}
-
-case class Data(
-    var owner: String,
-    var date: String,
-    var image: String,
-    var video: String,
-    var title: String,
-    var description: String,
-    var tags: List[String]
-)
+  */

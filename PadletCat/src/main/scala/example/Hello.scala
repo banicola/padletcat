@@ -701,7 +701,7 @@ object Main extends JFXApp {
           x.name == toggleGroup.getSelectedToggle.getUserData().toString()
         }.head
       datas.toList.filter { x =>
-        x._2.tags.contains(filter.tag)
+        x._2.race.contains(filter.tag)
       }
     } else {
       datas.toList
@@ -710,7 +710,7 @@ object Main extends JFXApp {
     for ((id, data) <- filteredDatas.reverse) {
       grilleContenu.children += contentCell(
         id,
-        data.owner,
+        data.author,
         data.date,
         data.title,
         data.description,
