@@ -40,6 +40,8 @@ import akka.pattern.{ask, pipe}
 import java.util.concurrent.TimeUnit.SECONDS
 import scala.concurrent.Await
 import scala.collection.mutable.Map
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 object Main extends JFXApp {
   println("Starting")
@@ -72,17 +74,34 @@ object Main extends JFXApp {
     style = "-fx-background-color:transparent"
   }
 
-  case class Filter(val name: String, val race: String)
+  case class Filter(val name: String, val padlet: String)
 
   var datas             = ListBuffer[(String, Data)]()
   var filterButtonsList = List[ToggleButton]()
   var filters: ListBuffer[Filter] = ListBuffer(
-    Filter("Yuzu", "Chartreux"),
-    Filter("Moka", "Norvégien"),
-    Filter("Clipsy", "Munchkin")
+    Filter("CatLover", "CatLover"),
+    Filter("GrumpyCat", "GrumpyCat"),
+    Filter("Peanut&Butter", "Peanut&Butter")
   )
-  var raceName: List[String]      = List("American shorthair", "Chartreux", "Maine coon","Munchkin","Norvégien","Persan","Siamois","Sibérien")
+  var padletNames = new ListBuffer[String]();
+  padletNames += "CatLover"
+  padletNames += "GrumpyCat"
+  padletNames += "Peanut&Butter"
+  // Padlet spinner in create content
+  var padletCombox = new ComboBox(padletNames) {
+      minWidth = 200
+      maxWidth = 200
+    } 
+  var comboBox_items = FXCollections.observableArrayList[String]();
+  padletCombox.setItems(comboBox_items);
+  updatePadletNames(padletNames)
+
   val toggleGroup: ToggleGroup    = new ToggleGroup();
+
+  def updatePadletNames(padletListNames: ListBuffer[String]):Unit={
+    comboBox_items.clear();
+    padletNames.foreach( x => comboBox_items.add(x))
+  }
 
   dbActor ! Load
 
@@ -113,6 +132,8 @@ object Main extends JFXApp {
         for (button <- filterButtonsList) yield {
           if (button.isSelected) {
             filters -= filters.filter(_.name == button.getText).head
+            padletNames -= button.getText
+            updatePadletNames(padletNames)
           }
         }
       }
@@ -241,7 +262,7 @@ object Main extends JFXApp {
       val filterPanesStyle =
         "-fx-background-color: rgb(255,255,255); -fx-background-radius: 10 10 10 10"
 
-      val filterBoxTitle = new Label("Créer un filtre") {
+      val filterBoxTitle = new Label("Créer un padlet") {
         style =
           "-fx-background-color: rgb(255,255,255); -fx-text-fill: #0066FF; -fx-font-family: Helvetica Neue; -fx-font-size: 22px;"
       }
@@ -280,18 +301,21 @@ object Main extends JFXApp {
       val vboxTitre = new VBox
       vboxTitre.children = List(labelTitre, addFilterName)
 
-      val race = new ComboBox(raceName) {
+      /*
+      val padlet = new ComboBox(padletName) {
         minWidth = 185
         maxWidth = 185
       }
-      val labelRace = new Label("Race")
-      val vboxRace  = new VBox
-      vboxRace.children = List(labelRace, race)
+      val labelPadlet = new Label("Padlet")
+      val vboxPadlet  = new VBox
+      vboxPadlet.children = List(labelPadlet, padlet)
+      */
 
       val contentAddFilterPane = new HBox(20)
       contentAddFilterPane.setStyle("-fx-background-color: rgb(255,255,255);")
       contentAddFilterPane.setPadding(new Insets(0, 30, 0, 30))
-      contentAddFilterPane.children = List(vboxTitre, vboxRace)
+      //contentAddFilterPane.children = List(vboxTitre, vboxPadlet)
+      contentAddFilterPane.children = List(vboxTitre)
 
       val greyLineFilter = new Line {
         stroke = rgb(150, 150, 150)
@@ -320,7 +344,7 @@ object Main extends JFXApp {
 
       cancelButton.onMouseClicked = new EventHandler[MouseEvent] {
         override def handle(event: MouseEvent) {
-          println("cancel add filter")
+          println("cancel add padlet")
           mainStack.children.remove(addStackFilter)
         }
       }
@@ -369,15 +393,17 @@ object Main extends JFXApp {
 
       createButton.onMouseClicked = new EventHandler[MouseEvent] {
         override def handle(event: MouseEvent) {
-          println("create add filter")
-          if (addFilterName.text.value != "" && race.value.value != null) {
+          println("create add padlet")
+          if (addFilterName.text.value != "") {
             filters += Filter(
               addFilterName.text.value,
-              race.value.value
+              addFilterName.text.value
             )
             filterButtonsList = createFiltersButton()
             filterButtonsList.map(_.setToggleGroup(toggleGroup))
             filtersHBox.children = filterButtonsList
+            padletNames += addFilterName.text.value
+            updatePadletNames(padletNames)
 
             mainStack.children.remove(addStackFilter)
           }
@@ -442,7 +468,6 @@ object Main extends JFXApp {
           filterButtonsList = createFiltersButton()
           filterButtonsList.map(_.setToggleGroup(toggleGroup))
           filtersHBox.children = filterButtonsList
-
         }
       }
 
@@ -542,16 +567,12 @@ object Main extends JFXApp {
         val vboxTitre  = new VBox
         vboxTitre.children = List(labelTitre, titre)
 
-        val race = new ComboBox(raceName) {
-          minWidth = 200
-          maxWidth = 200
-        }
-        val labelRace = new Label("Race")
-        val vboxRace  = new VBox
-        vboxRace.children = List(labelRace, race)
+        val labelPadlet = new Label("Padlet")
+        val vboxPadlet  = new VBox
+        vboxPadlet.children = List(labelPadlet, padletCombox)
 
         values.children =
-          List(vboxTitre, vboxRace)
+          List(vboxTitre, vboxPadlet)
 
         val description = new TextArea {
           wrapText = true
@@ -610,7 +631,7 @@ object Main extends JFXApp {
             val date                 = dateFormatter.format(submittedDateConvert)
             var encodedfile: String  = ""
 
-            if (titre.text.value != "" && description.text.value != "" && race.value.value != null) {
+            if (titre.text.value != "" && description.text.value != "" && padletCombox.value.value != null) {
               if (selectedImage != null) {
                 //transform file to string
 
@@ -626,7 +647,7 @@ object Main extends JFXApp {
                 video.text.value,
                 titre.text.value,
                 description.text.value,
-                List(race.value.value)
+                List(padletCombox.value.value)
               )
 
               mainStack.children.remove(ajoutContenu)
@@ -702,7 +723,7 @@ object Main extends JFXApp {
           x.name == toggleGroup.getSelectedToggle.getUserData().toString()
         }.head
       datas.toList.filter { x =>
-        x._2.race.contains(filter.race)
+        x._2.padlet.contains(filter.padlet)
       }
     } else {
       datas.toList
@@ -836,7 +857,7 @@ class DBActor(simul: ActorRef) extends Actor {
       video: String,
       title: String,
       text: String,
-      race: List[String]
+      padlet: List[String]
   ) = {
     val content: Data = Data(
       author,
@@ -845,7 +866,7 @@ class DBActor(simul: ActorRef) extends Actor {
       video,
       title,
       text,
-      race
+      padlet
     )
     val x = Random.nextInt(Integer.MAX_VALUE)
     println(x.toString)
@@ -860,9 +881,9 @@ class DBActor(simul: ActorRef) extends Actor {
         video: String,
         title: String,
         text: String,
-        race: List[String]
+        padlet: List[String]
         ) =>
-      addContent(author, date, image, video, title, text, race)
+      addContent(author, date, image, video, title, text, padlet)
     case Remove(id: String) => simul ! Command(s"get($id)", Map[String,Data]())
     case Load               => simul ! Command("get(All)", Map[String,Data]())
     case x: Data            =>
@@ -891,7 +912,7 @@ case class Add(
     video: String,
     title: String,
     text: String,
-    race: List[String]
+    padlet: List[String]
 ) extends Message
 case class Remove(id: String)                    extends Message
 case class AddToGui(id: String, data: Data)      extends Message
