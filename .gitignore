@@ -1,5 +1,6 @@
 target/
 .metals/
+.vscode/
 null/
 .scalafmt.conf
 PadletCat/target
