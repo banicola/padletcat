@@ -1,5 +1,4 @@
 package example
-
 import scalafx.Includes._
 import scalafx.application.{Platform, JFXApp}
 import scalafx.application.JFXApp.PrimaryStage
@@ -44,6 +43,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 object Main extends JFXApp {
+  println("Starting")
 
   private implicit val timeout = Timeout(15, SECONDS)
 
@@ -66,6 +66,7 @@ object Main extends JFXApp {
 
   val username = Await.result(response, timeout.duration).asInstanceOf[String]
 
+  println("gui actor definition sent to simul")
   simul ! guiActor
 
   val grilleContenu = new FlowPane(20, 20) {
@@ -106,7 +107,7 @@ object Main extends JFXApp {
   stage = new PrimaryStage {
     title = "PadletCat"
     width = 1920
-    height = 1080
+    height = 960
 
     val mainScene: Scene = new Scene {
 
@@ -269,6 +270,7 @@ object Main extends JFXApp {
       val closeImageView = new ImageView(closeImage)
       closeImageView.onMouseClicked = new EventHandler[MouseEvent] {
         override def handle(event: MouseEvent) {
+          println("close")
           mainStack.children.remove(addStackFilter)
         }
       }
@@ -341,6 +343,7 @@ object Main extends JFXApp {
 
       cancelButton.onMouseClicked = new EventHandler[MouseEvent] {
         override def handle(event: MouseEvent) {
+          println("cancel add padlet")
           mainStack.children.remove(addStackFilter)
         }
       }
@@ -389,6 +392,7 @@ object Main extends JFXApp {
 
       createButton.onMouseClicked = new EventHandler[MouseEvent] {
         override def handle(event: MouseEvent) {
+          println("create add padlet")
           if (addFilterName.text.value != "") {
             filters += Filter(
               addFilterName.text.value,
@@ -525,6 +529,7 @@ object Main extends JFXApp {
 
         closeImageView.onMouseClicked = new EventHandler[MouseEvent] {
           override def handle(event: MouseEvent) {
+            println("close")
             mainStack.children.remove(ajoutContenu)
           }
         }
@@ -532,7 +537,9 @@ object Main extends JFXApp {
         val addFilter     = new Image("add.jpg")
         val addFilterView = new ImageView(addFilter)
         addFilterView.onMouseClicked = new EventHandler[MouseEvent] {
-          override def handle(event: MouseEvent) {}
+          override def handle(event: MouseEvent) {
+            println("add Filter")
+          }
         }
 
         val upload     = new Image("upload.png")
@@ -645,6 +652,7 @@ object Main extends JFXApp {
               mainStack.children.remove(ajoutContenu)
 
             } else {
+              println("empty field")
             }
 
           }
@@ -691,6 +699,7 @@ object Main extends JFXApp {
 
   def addToGui(id: String, data: Data): Unit = {
     datas += ((id, data))
+    println("addedToGUI")
     setGui(datas)
   }
 
@@ -700,6 +709,7 @@ object Main extends JFXApp {
         datas -= content
       }
     }
+    println("removedFromGUI")
     setGui(datas)
   }
 
@@ -831,6 +841,7 @@ object Main extends JFXApp {
 
   stage.onCloseRequest = new EventHandler[WindowEvent] {
     override def handle(event: WindowEvent) {
+      println("closing window")
       system.terminate()
     }
   }
@@ -875,6 +886,7 @@ class GUIActor(simul: ActorRef) extends Actor {
     case Remove(id: String) => simul ! Command(s"get($id)", Map[String,Data]())
     case Load               => simul ! Command("get(All)", Map[String,Data]())
     case x: Data            =>
+      //println(s"le get a renvoyé $x et l'a supprimé")
       println(s"le get a supprimé l'élément $x")
     case x: String =>
       println(s"Le tell s'est bien effectué et a ajouté un objet avec l'id: $x")
