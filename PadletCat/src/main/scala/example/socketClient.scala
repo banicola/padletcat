@@ -16,13 +16,12 @@ case class SendMessage(message: BachTInstr)
 
 case object Init
 
-class Socket(remote: InetSocketAddress, simul: ActorRef /*,bdActor*/ ) extends Actor {
+class Socket(remote: InetSocketAddress, simul: ActorRef) extends Actor {
 
   import Tcp._
   import context.system
 
   println(s"simul = $simul")
-  // on essaie de se connecter à un serveur existant via l'acteur "IO"
   IO(Tcp) ! Connect(remote)
 
   /**
@@ -32,43 +31,39 @@ class Socket(remote: InetSocketAddress, simul: ActorRef /*,bdActor*/ ) extends A
     *   - Connected quand il arrive à se connecter à un serveur, il devient client
     */
   def receive = {
-    case CommandFailed(_: Connect) => // si il n'arrive pas à s'y connecter, il devient serveur
+    case CommandFailed(_: Connect) =>
       println("connect failed to server, becoming the server.")
       IO(Tcp) ! Bind(self, remote)
 
       var handler: Option[ActorRef] = None
-      simul ! "A"
-      context.become { // ce comportement, gère les connections.
+      simul ! "Amélie"
+      context.become {
         case Bound(local) =>
           println(s"Server started on $local")
-        case Connected(remote, local) => // lorsqu'on recoit une nouvelle connection d'un client
+        case Connected(remote, local) =>
           handler = Some(context.actorOf(Props(new TCPConnectionHandler(sender, simul))))
           println(s"New connnection: $local -> $remote")
           sender() ! Register(handler.get)
-        case m @ SendMessage(message) => // ici, on transfère le message venant de la GUI à l'acteur TCPConnectionHandler qui s'occupe de la communication.
+        case m @ SendMessage(message) =>
           handler match {
             case None        => println("No one connected yet.")
             case Some(actor) => actor ! m
           }
       }
 
-    case c @ Connected(remote, local) => // si il arrive à se connecter à un serveur, il devient client.
+    case c @ Connected(remote, local) =>
       println("connected")
-      simul ! "B"
+      simul ! "Bastien"
 
       val connection = sender()
       connection ! Register(self)
       context.become {
         case SendMessage(message) =>
-          println("Sending message: " + message)
           connection ! Write(ByteString(JacksonWrapper.serialize(messageSending(message))))
-        //case data: ByteString =>
-        //connection ! Write(data)
         case CommandFailed(w: Write) =>
-        case Received(data) => // c'est ici que l'on récupère les données reçues. One peut les envoyer à l'acteur qui s'occupe de la BD.
+        case Received(data) =>
           val decoded: BachTInstr =
             messageReception(JacksonWrapper.deserialize[MessageSend](data.utf8String))
-          println(s"They told us: $decoded")
           simul ! decoded
         case "close" =>
           connection ! Close
@@ -77,20 +72,17 @@ class Socket(remote: InetSocketAddress, simul: ActorRef /*,bdActor*/ ) extends A
       }
   }
 
-  class TCPConnectionHandler(sender: ActorRef, simul: ActorRef) extends Actor { // s'occupe de la communication
+  class TCPConnectionHandler(sender: ActorRef, simul: ActorRef) extends Actor {
     override def receive: Actor.Receive = {
-      case Received(data) => // c'est ici que l'on récupère les données reçues. One peut les envoyer à l'acteur qui s'occupe de la BD.
+      case Received(data) =>
         val decoded: BachTInstr = messageReception(
           JacksonWrapper.deserialize[MessageSend](data.utf8String)
         )
-        println(s"They told us: $decoded")
         simul ! decoded
       case message: ConnectionClosed =>
         println("Connection has been closed")
         context stop self
-      case SendMessage(message) =>
-        println("Sending message: " + message)
-        sender ! Write(ByteString(JacksonWrapper.serialize(messageSending(message))))
+      case SendMessage(message) => sender ! Write(ByteString(JacksonWrapper.serialize(messageSending(message))))        
     }
   }
 

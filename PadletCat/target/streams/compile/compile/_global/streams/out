@@ -1,4 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0mC:\Users\User\Desktop\Test projet jacquet\padletcat\PadletCat\src\main\scala\example\Hello.scala:431:33: Reference to uninitialized value filtersHBox[0m
-[0m[[0m[33mwarn[0m] [0m[0m      filtersEditionPane.left = filtersHBox[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Bastien\Documents\Unamur\Conception app mobile\padletcat\PadletCat\src\main\scala\example\socketClient.scala:86:126: value utf8String is not a member of akka.io.Tcp.Write[0m
+[0m[[0m[31merror[0m] [0m[0m        println(JacksonWrapper.deserialize[MessageSend](Write(ByteString(JacksonWrapper.serialize(messageSending(message)))).utf8String))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                                                             ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

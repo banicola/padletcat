@@ -126,19 +126,15 @@ class BachTSimul() extends Actor {
     case name: String =>
       username = name
       store = context.actorOf(
-        Props(new BachTStore(username)),
-        "store"
+        Props(new BachTStore(username))
       )
     case Init => sender ! username
     case Command(command, data) => // prend en "argument" la commende écrite en BachT et les données manipulées.
       val agent_parsed = BachTSimulParser.parse_agent(command)
       bacht_exec_all(agent_parsed, data)
     case i: BachTInstr =>
-      println("simulator received: " + i)
       store ! i
     case a: ActorRef =>
-      println("gui actor defined in simul")
-      println(s"the store is $store")
       store ! a
   }
 
@@ -262,7 +258,6 @@ class BachTSimul() extends Actor {
   def exec_primitive(prim: String, token: String, data: Map[String, Data]): Boolean = {
     val response = prim match {
       case "tell" =>
-        println("envois au socket")
         socket ! SendMessage(Tell(token, data))
         store ? Tell(token, data)
       case "ask" => store ? Ask(token, data)
@@ -273,11 +268,7 @@ class BachTSimul() extends Actor {
         store ? Get(token, data)
       case "nask" => store ? Nask(token, data)
     }
-
     Await.result(response, timeout.duration).asInstanceOf[Boolean]
-
   }
-
 }
-
 case class Command(var command: String, var data: Map[String, Data])

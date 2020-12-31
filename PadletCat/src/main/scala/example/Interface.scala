@@ -44,7 +44,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 object Main extends JFXApp {
-  println("Starting")
 
   private implicit val timeout = Timeout(15, SECONDS)
 
@@ -56,9 +55,9 @@ object Main extends JFXApp {
     "simul"
   )
 
-  val dbActor = system.actorOf(
-    Props(new DBActor(simul)),
-    "dbActor"
+  val guiActor = system.actorOf(
+    Props(new GUIActor(simul)),
+    "guiActor"
   )
 
   Thread.sleep(5000)
@@ -67,8 +66,7 @@ object Main extends JFXApp {
 
   val username = Await.result(response, timeout.duration).asInstanceOf[String]
 
-  println("gui actor definition sent to simul")
-  simul ! dbActor
+  simul ! guiActor
 
   val grilleContenu = new FlowPane(20, 20) {
     style = "-fx-background-color:transparent"
@@ -103,12 +101,12 @@ object Main extends JFXApp {
     padletNames.foreach( x => comboBox_items.add(x))
   }
 
-  dbActor ! Load
+  guiActor ! Load
 
   stage = new PrimaryStage {
     title = "PadletCat"
     width = 1920
-    height = 960
+    height = 1080
 
     val mainScene: Scene = new Scene {
 
@@ -271,7 +269,6 @@ object Main extends JFXApp {
       val closeImageView = new ImageView(closeImage)
       closeImageView.onMouseClicked = new EventHandler[MouseEvent] {
         override def handle(event: MouseEvent) {
-          println("close")
           mainStack.children.remove(addStackFilter)
         }
       }
@@ -344,7 +341,6 @@ object Main extends JFXApp {
 
       cancelButton.onMouseClicked = new EventHandler[MouseEvent] {
         override def handle(event: MouseEvent) {
-          println("cancel add padlet")
           mainStack.children.remove(addStackFilter)
         }
       }
@@ -393,7 +389,6 @@ object Main extends JFXApp {
 
       createButton.onMouseClicked = new EventHandler[MouseEvent] {
         override def handle(event: MouseEvent) {
-          println("create add padlet")
           if (addFilterName.text.value != "") {
             filters += Filter(
               addFilterName.text.value,
@@ -530,7 +525,6 @@ object Main extends JFXApp {
 
         closeImageView.onMouseClicked = new EventHandler[MouseEvent] {
           override def handle(event: MouseEvent) {
-            println("close")
             mainStack.children.remove(ajoutContenu)
           }
         }
@@ -538,9 +532,7 @@ object Main extends JFXApp {
         val addFilter     = new Image("add.jpg")
         val addFilterView = new ImageView(addFilter)
         addFilterView.onMouseClicked = new EventHandler[MouseEvent] {
-          override def handle(event: MouseEvent) {
-            println("add Filter")
-          }
+          override def handle(event: MouseEvent) {}
         }
 
         val upload     = new Image("upload.png")
@@ -640,7 +632,7 @@ object Main extends JFXApp {
 
               }
 
-              dbActor ! Add(
+              guiActor ! Add(
                 username,
                 date,
                 encodedfile,
@@ -653,7 +645,6 @@ object Main extends JFXApp {
               mainStack.children.remove(ajoutContenu)
 
             } else {
-              println("empty field")
             }
 
           }
@@ -700,7 +691,6 @@ object Main extends JFXApp {
 
   def addToGui(id: String, data: Data): Unit = {
     datas += ((id, data))
-    println("addedToGUI")
     setGui(datas)
   }
 
@@ -710,7 +700,6 @@ object Main extends JFXApp {
         datas -= content
       }
     }
-    println("removedFromGUI")
     setGui(datas)
   }
 
@@ -757,7 +746,7 @@ object Main extends JFXApp {
     deleteButtonView.onMouseClicked = new EventHandler[MouseEvent] {
       override def handle(event: MouseEvent) {
         if (username == author) {
-          dbActor ! Remove(contentID)
+          guiActor ! Remove(contentID)
         } else {
           println("L'utilisateur n'a pas la permission de supprimer ce contenu")
         }
@@ -842,13 +831,12 @@ object Main extends JFXApp {
 
   stage.onCloseRequest = new EventHandler[WindowEvent] {
     override def handle(event: WindowEvent) {
-      println("closing window")
       system.terminate()
     }
   }
 }
 
-class DBActor(simul: ActorRef) extends Actor {
+class GUIActor(simul: ActorRef) extends Actor {
 
   def addContent(
       author: String,
@@ -887,7 +875,6 @@ class DBActor(simul: ActorRef) extends Actor {
     case Remove(id: String) => simul ! Command(s"get($id)", Map[String,Data]())
     case Load               => simul ! Command("get(All)", Map[String,Data]())
     case x: Data            =>
-      //println(s"le get a renvoyé $x et l'a supprimé")
       println(s"le get a supprimé l'élément $x")
     case x: String =>
       println(s"Le tell s'est bien effectué et a ajouté un objet avec l'id: $x")
