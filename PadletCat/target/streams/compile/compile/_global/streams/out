@@ -1,13 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0mC:\Users\User\Desktop\Test projet jacquet\padletcat\PadletCat\src\main\scala\example\serialiser.scala:13:10: method setVisibilityChecker in class ObjectMapper is deprecated: see corresponding Javadoc for more information.[0m
-[0m[[0m[33mwarn[0m] [0m[0m  mapper.setVisibilityChecker([0m
-[0m[[0m[33mwarn[0m] [0m[0m         ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mC:\Users\User\Desktop\Test projet jacquet\padletcat\PadletCat\src\main\scala\example\serialiser.scala:34:9: method erasure in trait ClassManifestDeprecatedApis is deprecated: Use runtimeClass instead[0m
-[0m[[0m[33mwarn[0m] [0m[0m      m.erasure[0m
-[0m[[0m[33mwarn[0m] [0m[0m        ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mC:\Users\User\Desktop\Test projet jacquet\padletcat\PadletCat\src\main\scala\example\serialiser.scala:37:40: method erasure in trait ClassManifestDeprecatedApis is deprecated: Use runtimeClass instead[0m
-[0m[[0m[33mwarn[0m] [0m[0m        def getRawType             = m.erasure[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                       ^[0m
 [0m[[0m[33mwarn[0m] [0m[0mC:\Users\User\Desktop\Test projet jacquet\padletcat\PadletCat\src\main\scala\example\interface.scala:431:33: Reference to uninitialized value filtersHBox[0m
 [0m[[0m[33mwarn[0m] [0m[0m      filtersEditionPane.left = filtersHBox[0m
 [0m[[0m[33mwarn[0m] [0m[0m                                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mfour warnings found[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

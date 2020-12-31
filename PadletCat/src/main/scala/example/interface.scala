@@ -56,9 +56,9 @@ object Main extends JFXApp {
     "simul"
   )
 
-  val dbActor = system.actorOf(
-    Props(new DBActor(simul)),
-    "dbActor"
+  val guiActor = system.actorOf(
+    Props(new GUIActor(simul)),
+    "guiActor"
   )
 
   Thread.sleep(5000)
@@ -68,7 +68,7 @@ object Main extends JFXApp {
   val username = Await.result(response, timeout.duration).asInstanceOf[String]
 
   println("gui actor definition sent to simul")
-  simul ! dbActor
+  simul ! guiActor
 
   val grilleContenu = new FlowPane(20, 20) {
     style = "-fx-background-color:transparent"
@@ -103,7 +103,7 @@ object Main extends JFXApp {
     padletNames.foreach( x => comboBox_items.add(x))
   }
 
-  dbActor ! Load
+  guiActor ! Load
 
   stage = new PrimaryStage {
     title = "PadletCat"
@@ -640,7 +640,7 @@ object Main extends JFXApp {
 
               }
 
-              dbActor ! Add(
+              guiActor ! Add(
                 username,
                 date,
                 encodedfile,
@@ -757,7 +757,7 @@ object Main extends JFXApp {
     deleteButtonView.onMouseClicked = new EventHandler[MouseEvent] {
       override def handle(event: MouseEvent) {
         if (username == author) {
-          dbActor ! Remove(contentID)
+          guiActor ! Remove(contentID)
         } else {
           println("L'utilisateur n'a pas la permission de supprimer ce contenu")
         }
@@ -848,7 +848,7 @@ object Main extends JFXApp {
   }
 }
 
-class DBActor(simul: ActorRef) extends Actor {
+class GUIActor(simul: ActorRef) extends Actor {
 
   def addContent(
       author: String,
