@@ -2,5 +2,5 @@ target/
 .metals/
 null/
 .scalafmt.conf
-bacht/null
-bacht/target
+PadletCat/target
+PadletCat/null
