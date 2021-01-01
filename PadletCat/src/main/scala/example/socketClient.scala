@@ -8,8 +8,8 @@ import akka.actor._
 import scala.collection.mutable.Map
 
 object Socket {
-  def props(remote: InetSocketAddress, simul: ActorRef /*,bdActor:ActorRef*/ ) =
-    Props(classOf[Socket], remote, simul: ActorRef /*,bdActor:ActorRef*/ )
+  def props(remote: InetSocketAddress, simul: ActorRef) =
+    Props(classOf[Socket], remote, simul: ActorRef)
 }
 
 case class SendMessage(message: BachTInstr)
@@ -24,12 +24,6 @@ class Socket(remote: InetSocketAddress, simul: ActorRef) extends Actor {
   println(s"simul = $simul")
   IO(Tcp) ! Connect(remote)
 
-  /**
-    *  3 messages possible:
-    *   - l'acteur "simul" qui permet d'exécuter le code BachT venant de l'autre machine
-    *   - CommandFail si un serveur TCP n'existe pas déjà => à ce moment là, on devient un serveur TCP
-    *   - Connected quand il arrive à se connecter à un serveur, il devient client
-    */
   def receive = {
     case CommandFailed(_: Connect) =>
       println("connect failed to server, becoming the server.")

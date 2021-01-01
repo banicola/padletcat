@@ -86,7 +86,7 @@ object Main extends JFXApp {
   padletNames += "CatLover"
   padletNames += "GrumpyCat"
   padletNames += "Peanut&Butter"
-  // Padlet spinner in create content
+
   var padletCombox = new ComboBox(padletNames) {
       minWidth = 200
       maxWidth = 200
@@ -181,7 +181,6 @@ object Main extends JFXApp {
       val headerHBox = new BorderPane {
         style = "-fx-background-color: rgba(0, 102, 255); "
       }
-      //headerHBox.setPrefHeight(70)
       headerHBox.setPadding(new Insets(10, 20, 10, 40))
       headerHBox.left = logoHBox
       headerHBox.right = profile
@@ -196,17 +195,6 @@ object Main extends JFXApp {
         "-fx-background-color: rgba(0, 102, 255,0.3); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #0066FF; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
       val styleFilterNotSelected =
         "-fx-background-color: rgba(255,255,255,0); -fx-border-color: rgba(255,255,255,0); -fx-text-fill: #0066FF; -fx-font-family: Helvetica Neue; -fx-font-size: 18px; -fx-background-radius: 5 5 5 5"
-
-      //display filters from list given
-      /*for (filter <- filtersName.toList) {
-        val filterButton = new ToggleButton(filter){
-          padding = new Insets(10)
-          alignment = Pos.CenterLeft
-        }
-        filterButton.margin_=(new Insets(20))
-
-        filterButtonsList += filterButton
-      }*/
 
       filterButtonsList = createFiltersButton()
 
@@ -300,20 +288,9 @@ object Main extends JFXApp {
       val vboxTitre = new VBox
       vboxTitre.children = List(labelTitre, addFilterName)
 
-      /*
-      val padlet = new ComboBox(padletName) {
-        minWidth = 185
-        maxWidth = 185
-      }
-      val labelPadlet = new Label("Padlet")
-      val vboxPadlet  = new VBox
-      vboxPadlet.children = List(labelPadlet, padlet)
-      */
-
       val contentAddFilterPane = new HBox(20)
       contentAddFilterPane.setStyle("-fx-background-color: rgb(255,255,255);")
       contentAddFilterPane.setPadding(new Insets(0, 30, 0, 30))
-      //contentAddFilterPane.children = List(vboxTitre, vboxPadlet)
       contentAddFilterPane.children = List(vboxTitre)
 
       val greyLineFilter = new Line {
@@ -349,7 +326,6 @@ object Main extends JFXApp {
       }
 
       val bottomHBox = new HBox(20)
-      //bottomHBox.setAlignment(Pos.BottomRight)
       bottomHBox.setStyle("-fx-background-color: #FFFFFF;")
       bottomHBox.setPadding(new Insets(10, 0, 0, 0))
       bottomHBox.children = List(cancelButton, createButton)
@@ -387,7 +363,6 @@ object Main extends JFXApp {
         maxHeight = 293
         style = "-fx-background-color: rgb(255,255,255); -fx-background-radius: 15 15 15 15"
       }
-      //popUpFilter.setPadding(new Insets(0, 100, 0, 100))
       popUpFilter.center = addStackFilter
 
       createButton.onMouseClicked = new EventHandler[MouseEvent] {
@@ -449,7 +424,6 @@ object Main extends JFXApp {
 
       editFilters.onAction = new EventHandler[ActionEvent] {
         override def handle(event: ActionEvent) {
-          //changer l'affichage pour édition
           filtersPane.right = filtersEditionHBox
         }
       }
@@ -462,7 +436,6 @@ object Main extends JFXApp {
 
       deleteEditFilters.onAction = new EventHandler[ActionEvent] {
         override def handle(event: ActionEvent) {
-          //supprimer les filtres
           deleteFiltersButton()
           filterButtonsList = createFiltersButton()
           filterButtonsList.map(_.setToggleGroup(toggleGroup))
@@ -632,7 +605,6 @@ object Main extends JFXApp {
 
             if (titre.text.value != "" && description.text.value != "" && padletCombox.value.value != null) {
               if (selectedImage != null) {
-                //transform file to string
 
                 encodedfile =
                   Base64.getEncoder().encodeToString(Files.readAllBytes(selectedImage.toPath()))
@@ -886,12 +858,10 @@ class GUIActor(simul: ActorRef) extends Actor {
     case Remove(id: String) => simul ! Command(s"get($id)", Map[String,Data]())
     case Load               => simul ! Command("get(All)", Map[String,Data]())
     case x: Data            =>
-      //println(s"le get a renvoyé $x et l'a supprimé")
       println(s"le get a supprimé l'élément $x")
     case x: String =>
       println(s"Le tell s'est bien effectué et a ajouté un objet avec l'id: $x")
     case AddToGui(id: String, data: Data) =>
-      // ici, on peut j'ajouter à la GUI si il est dans les bonnes catégorie (cfr: filtres)
       Platform.runLater(
         Main.addToGui(id, data)
       )

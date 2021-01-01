@@ -101,14 +101,9 @@ case class MessageSend(instr: String, token: String, data: Map[String, Data])
 import scala.util.Random
 import language.postfixOps
 
-/**
-  * Cette classe est un acteur qui exécute le code écrit en BachT.
-  *
-  */
 class BachTSimul() extends Actor {
   private implicit val timeout = Timeout(10, SECONDS)
 
-  // creating the socket actor in order to communicate with the other app.
   val socket = context.actorOf(
     Socket.props(new InetSocketAddress("localhost", 8080), self /*,bdActor*/ ),
     "TCPSocket"
@@ -117,11 +112,7 @@ class BachTSimul() extends Actor {
   var store: ActorRef  = _
   var username: String = _
 
-  /**
-    * Elle communique en recevant 2 messages.
-    * Soit la commande à exécuter provenant de l'interface graphique de cette même app. Une réponse est envoyé au "sender" = l'acteur responsable de l'interface grpahique.
-    * Soit une instruction provenant de l'autre app. L'autre app ne recoit aucun réponse sute à cette instruction.
-    */
+
   def receive = {
     case name: String =>
       username = name
@@ -129,7 +120,7 @@ class BachTSimul() extends Actor {
         Props(new BachTStore(username))
       )
     case Init => sender ! username
-    case Command(command, data) => // prend en "argument" la commende écrite en BachT et les données manipulées.
+    case Command(command, data) =>
       val agent_parsed = BachTSimulParser.parse_agent(command)
       bacht_exec_all(agent_parsed, data)
     case i: BachTInstr =>
@@ -140,7 +131,6 @@ class BachTSimul() extends Actor {
 
   val bacht_random_choice = new Random()
 
-  // code du prof. J'ai uniquement rajouté "data" afin de faciliter l'utilisation de bachT.
   def run_one(agent: Expr, data: Map[String, Data]): (Boolean, Expr) = {
 
     agent match {
@@ -228,7 +218,6 @@ class BachTSimul() extends Actor {
     }
   }
 
-  // code du prof. J'ai uniquement rajouté "data" afin de faciliter l'utilisation de bachT.
   def bacht_exec_all(agent: Expr, data: Map[String, Data]): Boolean = {
 
     var failure = false
@@ -244,17 +233,14 @@ class BachTSimul() extends Actor {
     }
 
     if (c_agent == bacht_ast_empty_agent()) {
-      //println("Success\n")
+      println("Success\n")
       true
     } else {
-      //println("failure\n")
+      println("failure\n")
       false
     }
   }
 
-  // J'ai  rajouté "data" afin de faciliter l'utilisation de bachT.
-  // De plus, au lieu d'appeler directement le store, on lui envois un message avec "?" et attendons la reponse (Boolean
-  // De plus, pour tell et get, on envois l'instruction à l'auttre app afin qu'elles aient les mêmes données.
   def exec_primitive(prim: String, token: String, data: Map[String, Data]): Boolean = {
     val response = prim match {
       case "tell" =>

@@ -21,12 +21,6 @@ class BachTStore(clientName: String) extends Actor {
   var gui: ActorRef = _
   var theStore = Map[String,Data]()
 
-  /**
-    *  On recoit soit des instruction classique provenant initalement de la GUI
-    *  Soit des instruction "NoFeedback" provenant de l'autre app et ne demandant pas de réponse.
-    *  Les reponses sont envoyées dans les fonctions, au client. (varibale client)
-    *  Les réponses au "sender" sont destinées au BachTSimul afin de savoir si la commande c'est bien exécutée.
-    */
   def receive = {
     case x: BachTInstr =>
 
@@ -47,7 +41,7 @@ class BachTStore(clientName: String) extends Actor {
     case a: ActorRef =>
       gui = a
 
-      //Hardcodage d'un padlet---------
+      //Hardcodage d'un post-it---------
       
       var test_padlet = List("CatLover")
       var test_data = Map("1" -> Data("Amélie", "30/12/2020 03:37 PM",
